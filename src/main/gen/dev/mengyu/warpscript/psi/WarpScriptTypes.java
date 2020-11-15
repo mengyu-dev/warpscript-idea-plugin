@@ -15,7 +15,9 @@ public interface WarpScriptTypes {
   IElementType IFTE_CONTROL_EXPR = new WarpScriptElementType("IFTE_CONTROL_EXPR");
   IElementType IFT_CONTROL_EXPR = new WarpScriptElementType("IFT_CONTROL_EXPR");
   IElementType LIST_EXPR = new WarpScriptElementType("LIST_EXPR");
+  IElementType LITERAL_DOUBLE = new WarpScriptElementType("LITERAL_DOUBLE");
   IElementType LITERAL_EXPR = new WarpScriptElementType("LITERAL_EXPR");
+  IElementType LITERAL_LONG = new WarpScriptElementType("LITERAL_LONG");
   IElementType MACRO_EXPR = new WarpScriptElementType("MACRO_EXPR");
   IElementType MACRO_REF_EXPR = new WarpScriptElementType("MACRO_REF_EXPR");
   IElementType MAP_ENTRY_EXPR = new WarpScriptElementType("MAP_ENTRY_EXPR");
@@ -24,22 +26,25 @@ public interface WarpScriptTypes {
   IElementType MAP_VALUE_EXPR = new WarpScriptElementType("MAP_VALUE_EXPR");
   IElementType ONE_VALUE_EXPR = new WarpScriptElementType("ONE_VALUE_EXPR");
   IElementType PROC_EXPR = new WarpScriptElementType("PROC_EXPR");
-  IElementType RAW_TYPE_EXPR = new WarpScriptElementType("RAW_TYPE_EXPR");
   IElementType REF_EXPR = new WarpScriptElementType("REF_EXPR");
   IElementType SET_EXPR = new WarpScriptElementType("SET_EXPR");
   IElementType STRING_LITERAL_EXPR = new WarpScriptElementType("STRING_LITERAL_EXPR");
+  IElementType TYPED_EXPR = new WarpScriptElementType("TYPED_EXPR");
   IElementType VARIABLE_REF_EXPR = new WarpScriptElementType("VARIABLE_REF_EXPR");
 
+  IElementType BIT = new WarpScriptTokenType("0b[01]+");
   IElementType COMMENT = new WarpScriptTokenType("comment");
   IElementType DOUBLE = new WarpScriptTokenType("double");
-  IElementType FALSE = new WarpScriptTokenType("FALSE");
+  IElementType F = new WarpScriptTokenType("F");
+  IElementType FALSE = new WarpScriptTokenType("false");
+  IElementType HEX = new WarpScriptTokenType("hex");
   IElementType ID = new WarpScriptTokenType("id");
   IElementType IFT = new WarpScriptTokenType("IFT");
   IElementType IFTE = new WarpScriptTokenType("IFTE");
-  IElementType INT = new WarpScriptTokenType("int");
   IElementType LBLOCK = new WarpScriptTokenType("<%");
   IElementType LBRACE = new WarpScriptTokenType("{");
   IElementType LBRACK = new WarpScriptTokenType("[");
+  IElementType LONG = new WarpScriptTokenType("long");
   IElementType LPAREN = new WarpScriptTokenType("(");
   IElementType MACRO_PREFIX = new WarpScriptTokenType("@");
   IElementType MULSTRING = new WarpScriptTokenType("mulstring");
@@ -48,9 +53,11 @@ public interface WarpScriptTypes {
   IElementType RBRACE = new WarpScriptTokenType("}");
   IElementType RBRACK = new WarpScriptTokenType("]");
   IElementType RPAREN = new WarpScriptTokenType(")");
+  IElementType SDOULE = new WarpScriptTokenType("sdoule");
   IElementType STRING = new WarpScriptTokenType("string");
-  IElementType TRUE = new WarpScriptTokenType("TRUE");
-  IElementType VAR_PREFIX = new WarpScriptTokenType("$");
+  IElementType T = new WarpScriptTokenType("T");
+  IElementType TRUE = new WarpScriptTokenType("true");
+  IElementType VAR_PREFIX = new WarpScriptTokenType("VAR_PREFIX");
 
   class Factory {
     public static PsiElement createElement(ASTNode node) {
@@ -76,8 +83,14 @@ public interface WarpScriptTypes {
       else if (type == LIST_EXPR) {
         return new WarpScriptListExprImpl(node);
       }
+      else if (type == LITERAL_DOUBLE) {
+        return new WarpScriptLiteralDoubleImpl(node);
+      }
       else if (type == LITERAL_EXPR) {
         return new WarpScriptLiteralExprImpl(node);
+      }
+      else if (type == LITERAL_LONG) {
+        return new WarpScriptLiteralLongImpl(node);
       }
       else if (type == MACRO_EXPR) {
         return new WarpScriptMacroExprImpl(node);
@@ -103,9 +116,6 @@ public interface WarpScriptTypes {
       else if (type == PROC_EXPR) {
         return new WarpScriptProcExprImpl(node);
       }
-      else if (type == RAW_TYPE_EXPR) {
-        return new WarpScriptRawTypeExprImpl(node);
-      }
       else if (type == REF_EXPR) {
         return new WarpScriptRefExprImpl(node);
       }
@@ -114,6 +124,9 @@ public interface WarpScriptTypes {
       }
       else if (type == STRING_LITERAL_EXPR) {
         return new WarpScriptStringLiteralExprImpl(node);
+      }
+      else if (type == TYPED_EXPR) {
+        return new WarpScriptTypedExprImpl(node);
       }
       else if (type == VARIABLE_REF_EXPR) {
         return new WarpScriptVariableRefExprImpl(node);

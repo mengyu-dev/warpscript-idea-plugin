@@ -10,4 +10,7 @@ public interface WarpScriptVariableRefExpr extends PsiElement {
   @NotNull
   WarpScriptIdExpr getIdExpr();
 
+  @NotNull
+  PsiElement getVarPrefix();
+
 }

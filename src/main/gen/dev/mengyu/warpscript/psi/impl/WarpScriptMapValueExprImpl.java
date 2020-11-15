@@ -34,8 +34,14 @@ public class WarpScriptMapValueExprImpl extends ASTWrapperPsiElement implements 
 
   @Override
   @Nullable
-  public WarpScriptRawTypeExpr getRawTypeExpr() {
-    return findChildByClass(WarpScriptRawTypeExpr.class);
+  public WarpScriptTypedExpr getTypedExpr() {
+    return findChildByClass(WarpScriptTypedExpr.class);
+  }
+
+  @Override
+  @Nullable
+  public WarpScriptVariableRefExpr getVariableRefExpr() {
+    return findChildByClass(WarpScriptVariableRefExpr.class);
   }
 
 }

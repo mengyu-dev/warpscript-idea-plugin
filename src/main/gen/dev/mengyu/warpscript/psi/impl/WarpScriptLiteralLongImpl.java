@@ -11,14 +11,14 @@ import static dev.mengyu.warpscript.psi.WarpScriptTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import dev.mengyu.psi.*;
 
-public class WarpScriptProcExprImpl extends ASTWrapperPsiElement implements WarpScriptProcExpr {
+public class WarpScriptLiteralLongImpl extends ASTWrapperPsiElement implements WarpScriptLiteralLong {
 
-  public WarpScriptProcExprImpl(@NotNull ASTNode node) {
+  public WarpScriptLiteralLongImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull WarpScriptVisitor visitor) {
-    visitor.visitProcExpr(this);
+    visitor.visitLiteralLong(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -27,21 +27,15 @@ public class WarpScriptProcExprImpl extends ASTWrapperPsiElement implements Warp
   }
 
   @Override
-  @NotNull
-  public List<WarpScriptControlExpr> getControlExprList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, WarpScriptControlExpr.class);
+  @Nullable
+  public PsiElement getHex() {
+    return findChildByType(HEX);
   }
 
   @Override
-  @NotNull
-  public List<WarpScriptRefExpr> getRefExprList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, WarpScriptRefExpr.class);
-  }
-
-  @Override
-  @NotNull
-  public List<WarpScriptTypedExpr> getTypedExprList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, WarpScriptTypedExpr.class);
+  @Nullable
+  public PsiElement getLong() {
+    return findChildByType(LONG);
   }
 
 }

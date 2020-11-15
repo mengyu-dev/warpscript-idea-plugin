@@ -28,8 +28,14 @@ public class WarpScriptMapKeyExprImpl extends ASTWrapperPsiElement implements Wa
 
   @Override
   @Nullable
-  public PsiElement getInt() {
-    return findChildByType(INT);
+  public PsiElement getDouble() {
+    return findChildByType(DOUBLE);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getLong() {
+    return findChildByType(LONG);
   }
 
   @Override

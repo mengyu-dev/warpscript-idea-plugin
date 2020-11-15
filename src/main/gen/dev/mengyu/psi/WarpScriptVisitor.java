@@ -35,7 +35,15 @@ public class WarpScriptVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitLiteralDouble(@NotNull WarpScriptLiteralDouble o) {
+    visitPsiElement(o);
+  }
+
   public void visitLiteralExpr(@NotNull WarpScriptLiteralExpr o) {
+    visitPsiElement(o);
+  }
+
+  public void visitLiteralLong(@NotNull WarpScriptLiteralLong o) {
     visitPsiElement(o);
   }
 
@@ -71,10 +79,6 @@ public class WarpScriptVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitRawTypeExpr(@NotNull WarpScriptRawTypeExpr o) {
-    visitPsiElement(o);
-  }
-
   public void visitRefExpr(@NotNull WarpScriptRefExpr o) {
     visitPsiElement(o);
   }
@@ -84,6 +88,10 @@ public class WarpScriptVisitor extends PsiElementVisitor {
   }
 
   public void visitStringLiteralExpr(@NotNull WarpScriptStringLiteralExpr o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTypedExpr(@NotNull WarpScriptTypedExpr o) {
     visitPsiElement(o);
   }
 

@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface WarpScriptRawTypeExpr extends PsiElement {
+public interface WarpScriptTypedExpr extends PsiElement {
 
   @Nullable
   WarpScriptListExpr getListExpr();
@@ -21,8 +21,5 @@ public interface WarpScriptRawTypeExpr extends PsiElement {
 
   @Nullable
   WarpScriptSetExpr getSetExpr();
-
-  @Nullable
-  WarpScriptVariableRefExpr getVariableRefExpr();
 
 }

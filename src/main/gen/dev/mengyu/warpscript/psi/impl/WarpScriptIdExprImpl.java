@@ -27,21 +27,9 @@ public class WarpScriptIdExprImpl extends ASTWrapperPsiElement implements WarpSc
   }
 
   @Override
-  @Nullable
-  public PsiElement getDouble() {
-    return findChildByType(DOUBLE);
-  }
-
-  @Override
-  @Nullable
+  @NotNull
   public PsiElement getId() {
-    return findChildByType(ID);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getInt() {
-    return findChildByType(INT);
+    return findNotNullChildByType(ID);
   }
 
 }

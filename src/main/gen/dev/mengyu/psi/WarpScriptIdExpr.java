@@ -7,13 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface WarpScriptIdExpr extends PsiElement {
 
-  @Nullable
-  PsiElement getDouble();
-
-  @Nullable
+  @NotNull
   PsiElement getId();
-
-  @Nullable
-  PsiElement getInt();
 
 }

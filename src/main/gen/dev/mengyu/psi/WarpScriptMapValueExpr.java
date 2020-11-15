@@ -11,6 +11,9 @@ public interface WarpScriptMapValueExpr extends PsiElement {
   WarpScriptOneValueExpr getOneValueExpr();
 
   @Nullable
-  WarpScriptRawTypeExpr getRawTypeExpr();
+  WarpScriptTypedExpr getTypedExpr();
+
+  @Nullable
+  WarpScriptVariableRefExpr getVariableRefExpr();
 
 }

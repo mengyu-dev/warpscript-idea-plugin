@@ -24,51 +24,65 @@
     RPAREN               =  ')'
     LBLOCK               =  '<%'
     RBLOCK               =  '%>'
-    VAR_PREFIX             = '$'
-    MACRO_PREFIX           = '@'
-    NULL                   = 'NULL'
+    MACRO_PREFIX         = '@'
+    VAR_PREFIX           = 'regexp:\!?\$'
+    NULL                 = 'NULL'
+    T                    = 'T'
+    TRUE                 = 'true'
+    F                    = 'F'
+    FALSE                = 'false'
 
 // control flow
-    IFT                    = 'IFT'
-    IFTE                    = 'IFTE'
-
-
+    IFT                  = 'IFT'
+    IFTE                 = 'IFTE'
 
     space='regexp:\s+'
-    comment='regexp:(//|#).*'
-    int='regexp:\d+'
-    double='regexp:\d+(\.\d*)?'
-   // id="regexp:[\p{Alnum}\p{Punct}&&[^'@$]]*"
+    comment='regexp:(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/)|(//.*)|(#.*)'
+
+    long='regexp:[\-\+]?\d+'
+    hex='regexp:0x\d+'
+    bit='0b[01]+'
+
+    double='regexp:[\-\+]?\d+\.\d*'
+    sdoule='regexp:[\-\+]?\d+\.\d*[eE][\-\+]?\d*'
+
     string="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
-    mulstring="regexp:<'([^<'>\\]|\\.)*'>"
-    id="regexp:[\p{Alnum}!\\\%&()*+,\-./:;<=>?\[\\\]\^_‘{|}~]*"
+    mulstring="regexp:<'([^<'>\\]|\\.)*'>" // change to lookup around (?<=<'[\r\n]).*(?<='>)
+    id="regexp:[\p{Alnum}!\\\%&()*+,\-./:;<=>?\[\\\]\^_‘{|}~]*"// "regexp:[\p{Alnum}\p{Punct}&&[^'@$]]*"
   ]
 
 }
 
 //root ::= !<<eof>> mul_string_expr
 root ::= !<<eof>> proc_expr
-proc_expr ::=  ( control_expr | ref_expr | raw_type_expr)*
+proc_expr ::=  ( control_expr | ref_expr | typed_expr )*
 
-macro_expr ::= LBLOCK proc_expr? RBLOCK
-//macro_file_expr ::=  (raw_type_expr proc_expr)? macro_expr proc_expr?
 
 ref_expr ::=  macro_ref_expr | variable_ref_expr | func_ref_expr 
-id_expr ::= id  | int  | double
+id_expr ::= id
 macro_ref_expr ::= MACRO_PREFIX id_expr
 variable_ref_expr ::= VAR_PREFIX id_expr
 func_ref_expr ::= id
 
-raw_type_expr ::= literal_expr | variable_ref_expr | macro_expr |  list_expr | set_expr | map_expr
-bool_literal_expr ::= TRUE | FALSE
+macro_expr ::= LBLOCK proc_expr? RBLOCK
+
+
+// literal expr
+bool_literal_expr ::= TRUE | FALSE | T | F
 string_literal_expr ::= string | mulstring
+literal_expr ::= literal_long | literal_double | string_literal_expr | bool_literal_expr | NULL
+literal_long ::= long | hex | bit
+literal_double ::= double | sdoule
+
+
+typed_expr ::=  macro_expr |  list_expr | set_expr | map_expr | literal_expr
 one_value_expr ::=  proc_expr [ macro_ref_expr | func_ref_expr ]  // todo
-literal_expr ::= int | double | string_literal_expr | bool_literal_expr | NULL
+
 list_expr ::= LBRACK one_value_expr  RBRACK {pin = 1}
 set_expr ::= LPAREN one_value_expr  RPAREN {pin = 1}
 
-map_key_expr ::= string | int
-map_value_expr ::=  raw_type_expr | one_value_expr
+map_key_expr ::= string | long  | double | NULL
+map_value_expr ::=  variable_ref_expr | typed_expr | one_value_expr
 map_entry_expr ::= map_key_expr map_value_expr
 map_expr ::= LBRACE map_entry_expr*  RBRACE {pin = 1}
 

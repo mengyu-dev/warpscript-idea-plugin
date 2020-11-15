@@ -25,10 +25,13 @@ import static dev.mengyu.warpscript.psi.WarpScriptTypes.*;
 EOL=\R
 WHITE_SPACE=\s+
 
+VAR_PREFIX=\!?\$
 SPACE=[ \t\n\x0B\f\r]+
-COMMENT=("//"|#).*
-INT=[0-9]+
-DOUBLE=[0-9]+(\.[0-9]*)?
+COMMENT=("/"\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+"/")|("//".*)|(#.*)
+LONG=[\-\+]?[0-9]+
+HEX=0x[0-9]+
+DOUBLE=[\-\+]?[0-9]+\.[0-9]*
+SDOULE=[\-\+]?[0-9]+\.[0-9]*[eE][\-\+]?[0-9]*
 STRING=('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")
 MULSTRING=<'([^<'>\\]|\\.)*'>
 ID=[\p{Alnum}!\\\%&()*+,\-./:;<=>?\[\\\]\^_‘{|}~]*
@@ -45,18 +48,23 @@ ID=[\p{Alnum}!\\\%&()*+,\-./:;<=>?\[\\\]\^_‘{|}~]*
   ")"                { return RPAREN; }
   "<%"               { return LBLOCK; }
   "%>"               { return RBLOCK; }
-  "$"                { return VAR_PREFIX; }
   "@"                { return MACRO_PREFIX; }
   "NULL"             { return NULL; }
+  "T"                { return T; }
+  "true"             { return TRUE; }
+  "F"                { return F; }
+  "false"            { return FALSE; }
   "IFT"              { return IFT; }
   "IFTE"             { return IFTE; }
-  "TRUE"             { return TRUE; }
-  "FALSE"            { return FALSE; }
+  "0b[01]+"          { return BIT; }
 
+  {VAR_PREFIX}       { return VAR_PREFIX; }
   {SPACE}            { return SPACE; }
   {COMMENT}          { return COMMENT; }
-  {INT}              { return INT; }
+  {LONG}             { return LONG; }
+  {HEX}              { return HEX; }
   {DOUBLE}           { return DOUBLE; }
+  {SDOULE}           { return SDOULE; }
   {STRING}           { return STRING; }
   {MULSTRING}        { return MULSTRING; }
   {ID}               { return ID; }

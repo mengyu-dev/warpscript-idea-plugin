@@ -11,9 +11,9 @@ public interface WarpScriptProcExpr extends PsiElement {
   List<WarpScriptControlExpr> getControlExprList();
 
   @NotNull
-  List<WarpScriptRawTypeExpr> getRawTypeExprList();
+  List<WarpScriptRefExpr> getRefExprList();
 
   @NotNull
-  List<WarpScriptRefExpr> getRefExprList();
+  List<WarpScriptTypedExpr> getTypedExprList();
 
 }

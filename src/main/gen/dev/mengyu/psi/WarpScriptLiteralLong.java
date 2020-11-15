@@ -5,15 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface WarpScriptMapKeyExpr extends PsiElement {
+public interface WarpScriptLiteralLong extends PsiElement {
 
   @Nullable
-  PsiElement getDouble();
+  PsiElement getHex();
 
   @Nullable
   PsiElement getLong();
-
-  @Nullable
-  PsiElement getString();
 
 }

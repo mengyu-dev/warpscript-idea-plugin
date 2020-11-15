@@ -36,14 +36,15 @@ public class WarpScriptParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // TRUE | FALSE
+  // TRUE | FALSE | T | F
   public static boolean bool_literal_expr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "bool_literal_expr")) return false;
-    if (!nextTokenIs(b, "<bool literal expr>", FALSE, TRUE)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, BOOL_LITERAL_EXPR, "<bool literal expr>");
     r = consumeToken(b, TRUE);
     if (!r) r = consumeToken(b, FALSE);
+    if (!r) r = consumeToken(b, T);
+    if (!r) r = consumeToken(b, F);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -73,15 +74,14 @@ public class WarpScriptParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // id  | int  | double
+  // id
   public static boolean id_expr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "id_expr")) return false;
+    if (!nextTokenIs(b, ID)) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, ID_EXPR, "<id expr>");
+    Marker m = enter_section_(b);
     r = consumeToken(b, ID);
-    if (!r) r = consumeToken(b, INT);
-    if (!r) r = consumeToken(b, DOUBLE);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, ID_EXPR, r);
     return r;
   }
 
@@ -215,16 +215,42 @@ public class WarpScriptParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // int | double | string_literal_expr | bool_literal_expr | NULL
+  // double | sdoule
+  public static boolean literal_double(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "literal_double")) return false;
+    if (!nextTokenIs(b, "<literal double>", DOUBLE, SDOULE)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, LITERAL_DOUBLE, "<literal double>");
+    r = consumeToken(b, DOUBLE);
+    if (!r) r = consumeToken(b, SDOULE);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // literal_long | literal_double | string_literal_expr | bool_literal_expr | NULL
   public static boolean literal_expr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "literal_expr")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, LITERAL_EXPR, "<literal expr>");
-    r = consumeToken(b, INT);
-    if (!r) r = consumeToken(b, DOUBLE);
+    r = literal_long(b, l + 1);
+    if (!r) r = literal_double(b, l + 1);
     if (!r) r = string_literal_expr(b, l + 1);
     if (!r) r = bool_literal_expr(b, l + 1);
     if (!r) r = consumeToken(b, NULL);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // long | hex | bit
+  public static boolean literal_long(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "literal_long")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, LITERAL_LONG, "<literal long>");
+    r = consumeToken(b, LONG);
+    if (!r) r = consumeToken(b, HEX);
+    if (!r) r = consumeToken(b, BIT);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -267,7 +293,6 @@ public class WarpScriptParser implements PsiParser, LightPsiParser {
   // map_key_expr map_value_expr
   public static boolean map_entry_expr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "map_entry_expr")) return false;
-    if (!nextTokenIs(b, "<map entry expr>", INT, STRING)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, MAP_ENTRY_EXPR, "<map entry expr>");
     r = map_key_expr(b, l + 1);
@@ -303,25 +328,27 @@ public class WarpScriptParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // string | int
+  // string | long  | double | NULL
   public static boolean map_key_expr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "map_key_expr")) return false;
-    if (!nextTokenIs(b, "<map key expr>", INT, STRING)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, MAP_KEY_EXPR, "<map key expr>");
     r = consumeToken(b, STRING);
-    if (!r) r = consumeToken(b, INT);
+    if (!r) r = consumeToken(b, LONG);
+    if (!r) r = consumeToken(b, DOUBLE);
+    if (!r) r = consumeToken(b, NULL);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
   /* ********************************************************** */
-  // raw_type_expr | one_value_expr
+  // variable_ref_expr | typed_expr | one_value_expr
   public static boolean map_value_expr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "map_value_expr")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, MAP_VALUE_EXPR, "<map value expr>");
-    r = raw_type_expr(b, l + 1);
+    r = variable_ref_expr(b, l + 1);
+    if (!r) r = typed_expr(b, l + 1);
     if (!r) r = one_value_expr(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
@@ -356,7 +383,7 @@ public class WarpScriptParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ( control_expr | ref_expr | raw_type_expr)*
+  // ( control_expr | ref_expr | typed_expr )*
   public static boolean proc_expr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "proc_expr")) return false;
     Marker m = enter_section_(b, l, _NONE_, PROC_EXPR, "<proc expr>");
@@ -369,29 +396,13 @@ public class WarpScriptParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // control_expr | ref_expr | raw_type_expr
+  // control_expr | ref_expr | typed_expr
   private static boolean proc_expr_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "proc_expr_0")) return false;
     boolean r;
     r = control_expr(b, l + 1);
     if (!r) r = ref_expr(b, l + 1);
-    if (!r) r = raw_type_expr(b, l + 1);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // literal_expr | variable_ref_expr | macro_expr |  list_expr | set_expr | map_expr
-  public static boolean raw_type_expr(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "raw_type_expr")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, RAW_TYPE_EXPR, "<raw type expr>");
-    r = literal_expr(b, l + 1);
-    if (!r) r = variable_ref_expr(b, l + 1);
-    if (!r) r = macro_expr(b, l + 1);
-    if (!r) r = list_expr(b, l + 1);
-    if (!r) r = set_expr(b, l + 1);
-    if (!r) r = map_expr(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    if (!r) r = typed_expr(b, l + 1);
     return r;
   }
 
@@ -454,6 +465,21 @@ public class WarpScriptParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _NONE_, STRING_LITERAL_EXPR, "<string literal expr>");
     r = consumeToken(b, STRING);
     if (!r) r = consumeToken(b, MULSTRING);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // macro_expr |  list_expr | set_expr | map_expr | literal_expr
+  public static boolean typed_expr(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "typed_expr")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, TYPED_EXPR, "<typed expr>");
+    r = macro_expr(b, l + 1);
+    if (!r) r = list_expr(b, l + 1);
+    if (!r) r = set_expr(b, l + 1);
+    if (!r) r = map_expr(b, l + 1);
+    if (!r) r = literal_expr(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }

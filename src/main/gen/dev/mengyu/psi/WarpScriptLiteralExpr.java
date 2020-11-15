@@ -11,12 +11,12 @@ public interface WarpScriptLiteralExpr extends PsiElement {
   WarpScriptBoolLiteralExpr getBoolLiteralExpr();
 
   @Nullable
+  WarpScriptLiteralDouble getLiteralDouble();
+
+  @Nullable
+  WarpScriptLiteralLong getLiteralLong();
+
+  @Nullable
   WarpScriptStringLiteralExpr getStringLiteralExpr();
-
-  @Nullable
-  PsiElement getDouble();
-
-  @Nullable
-  PsiElement getInt();
 
 }
