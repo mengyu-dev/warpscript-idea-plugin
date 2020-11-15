@@ -1,0 +1,22 @@
+<idea-plugin>
+    <id>dev.mengyu.warpscript-lang</id>
+    <name>WarpScript Language Extension</name>
+    <vendor email="mengyu.dev@live.com" url="http://warpscript-lang.mengyu.dev">Mengyu LIU</vendor>
+
+    <description><![CDATA[WarpScript language support in Intellij, syntax highlight, auto completion ...]]></description>
+
+    <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <fileType name="Warp Script File" implementationClass="dev.mengyu.warpscript.WarpScriptFileType"
+                  fieldName="INSTANCE" language="Warpscript" extensions="mc2"/>
+        <lang.parserDefinition language="Warpscript"
+                               implementationClass="dev.mengyu.warpscript.psi.WarpScriptParserDefinition"/>
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+</idea-plugin>

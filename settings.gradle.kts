@@ -1,0 +1,2 @@
+rootProject.name = "warpscript-lang"
+

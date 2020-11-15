@@ -1,0 +1,66 @@
+{
+
+    parserClass="dev.mengyu.warpscript.WarpScriptParser"
+
+    extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+    psiClassPrefix="WarpScript"
+    psiImplClassSuffix="Impl"
+    psiPackage="dev.mengyu.psi"
+    psiImplPackage="dev.mengyu.warpscript.psi.impl"
+
+    elementTypeHolderClass="dev.mengyu.warpscript.psi.WarpScriptTypes"
+    elementTypeClass="dev.mengyu.warpscript.psi.WarpScriptElementType"
+    tokenTypeClass="dev.mengyu.warpscript.psi.WarpScriptTokenType"
+
+    psiImplUtilClass="dev.mengyu.warpscript.psi.impl.SimplePsiImplUtil"
+
+  tokens=[
+    LBRACE               =  '{'
+    RBRACE               =  '}'
+    LBRACK               =  '['
+    RBRACK               =  ']'
+    LPAREN               =  '('
+    RPAREN               =  ')'
+    LBLOCK               =  '<%'
+    RBLOCK               =  '%>'
+    VAR_PREFIX             = '$'
+    MACRO_PREFIX           = '@'
+    NULL                   = 'NULL'
+
+    space='regexp:\s+'
+    comment='regexp:(//|#).*'
+    int='regexp:\d+'
+    double='regexp:\d+(\.\d*)?'
+   // id="regexp:[\p{Alnum}\p{Punct}&&[^'@$]]*"
+    string="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
+    mulstring="regexp:<'([^<'>\\]|\\.)*'>"
+    id="regexp:[\p{Alnum}!\\\%&()*+,\-./:;<=>?\[\\\]\^_‘{|}~]*"
+  ]
+
+}
+
+//root ::= !<<eof>> mul_string_expr
+root ::= !<<eof>> proc_expr
+proc_expr ::=  (func_call_expr | raw_type_expr)*
+
+macro_expr ::= LBLOCK proc_expr? RBLOCK
+//macro_file_expr ::=  (raw_type_expr proc_expr)? macro_expr proc_expr?
+
+func_call_expr ::=  macro_call_expr | variable_call_expr | extension_call_expr | native_func_call_expr
+id_expr ::= id  | int  | double
+macro_call_expr ::= MACRO_PREFIX id_expr
+variable_call_expr ::= VAR_PREFIX id_expr
+extension_call_expr ::= id
+native_func_call_expr ::= id
+
+raw_type_expr ::= literal_expr | variable_call_expr | macro_expr |  list_expr | set_expr | map_expr
+bool_literal_expr ::= TRUE | FALSE
+string_literal_expr ::= string | mulstring
+one_value_expr ::=  proc_expr [ macro_call_expr | extension_call_expr | native_func_call_expr ]  // todo
+literal_expr ::= int | double | string_literal_expr | bool_literal_expr | NULL
+list_expr ::= LBRACK one_value_expr  RBRACK {pin = 1}
+set_expr ::= LPAREN one_value_expr  RPAREN {pin = 1}
+
+map_expr ::= LBRACE { (string | int )  ( raw_type_expr | one_value_expr)  }*  RBRACE {pin = 1}
+
