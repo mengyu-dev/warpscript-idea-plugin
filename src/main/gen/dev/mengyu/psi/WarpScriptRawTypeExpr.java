@@ -23,6 +23,6 @@ public interface WarpScriptRawTypeExpr extends PsiElement {
   WarpScriptSetExpr getSetExpr();
 
   @Nullable
-  WarpScriptVariableCallExpr getVariableCallExpr();
+  WarpScriptVariableRefExpr getVariableRefExpr();
 
 }

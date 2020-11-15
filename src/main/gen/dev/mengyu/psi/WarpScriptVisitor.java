@@ -11,15 +11,23 @@ public class WarpScriptVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitExtensionCallExpr(@NotNull WarpScriptExtensionCallExpr o) {
+  public void visitControlExpr(@NotNull WarpScriptControlExpr o) {
     visitPsiElement(o);
   }
 
-  public void visitFuncCallExpr(@NotNull WarpScriptFuncCallExpr o) {
+  public void visitFuncRefExpr(@NotNull WarpScriptFuncRefExpr o) {
     visitPsiElement(o);
   }
 
   public void visitIdExpr(@NotNull WarpScriptIdExpr o) {
+    visitPsiElement(o);
+  }
+
+  public void visitIftControlExpr(@NotNull WarpScriptIftControlExpr o) {
+    visitPsiElement(o);
+  }
+
+  public void visitIfteControlExpr(@NotNull WarpScriptIfteControlExpr o) {
     visitPsiElement(o);
   }
 
@@ -31,11 +39,15 @@ public class WarpScriptVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitMacroCallExpr(@NotNull WarpScriptMacroCallExpr o) {
+  public void visitMacroExpr(@NotNull WarpScriptMacroExpr o) {
     visitPsiElement(o);
   }
 
-  public void visitMacroExpr(@NotNull WarpScriptMacroExpr o) {
+  public void visitMacroRefExpr(@NotNull WarpScriptMacroRefExpr o) {
+    visitPsiElement(o);
+  }
+
+  public void visitMapEntryExpr(@NotNull WarpScriptMapEntryExpr o) {
     visitPsiElement(o);
   }
 
@@ -43,7 +55,11 @@ public class WarpScriptVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitNativeFuncCallExpr(@NotNull WarpScriptNativeFuncCallExpr o) {
+  public void visitMapKeyExpr(@NotNull WarpScriptMapKeyExpr o) {
+    visitPsiElement(o);
+  }
+
+  public void visitMapValueExpr(@NotNull WarpScriptMapValueExpr o) {
     visitPsiElement(o);
   }
 
@@ -59,6 +75,10 @@ public class WarpScriptVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitRefExpr(@NotNull WarpScriptRefExpr o) {
+    visitPsiElement(o);
+  }
+
   public void visitSetExpr(@NotNull WarpScriptSetExpr o) {
     visitPsiElement(o);
   }
@@ -67,7 +87,7 @@ public class WarpScriptVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitVariableCallExpr(@NotNull WarpScriptVariableCallExpr o) {
+  public void visitVariableRefExpr(@NotNull WarpScriptVariableRefExpr o) {
     visitPsiElement(o);
   }
 

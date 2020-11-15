@@ -28,14 +28,8 @@ public class WarpScriptMapExprImpl extends ASTWrapperPsiElement implements WarpS
 
   @Override
   @NotNull
-  public List<WarpScriptOneValueExpr> getOneValueExprList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, WarpScriptOneValueExpr.class);
-  }
-
-  @Override
-  @NotNull
-  public List<WarpScriptRawTypeExpr> getRawTypeExprList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, WarpScriptRawTypeExpr.class);
+  public List<WarpScriptMapEntryExpr> getMapEntryExprList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, WarpScriptMapEntryExpr.class);
   }
 
 }

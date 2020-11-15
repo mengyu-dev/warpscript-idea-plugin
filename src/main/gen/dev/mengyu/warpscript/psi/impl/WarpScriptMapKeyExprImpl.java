@@ -11,14 +11,14 @@ import static dev.mengyu.warpscript.psi.WarpScriptTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import dev.mengyu.psi.*;
 
-public class WarpScriptOneValueExprImpl extends ASTWrapperPsiElement implements WarpScriptOneValueExpr {
+public class WarpScriptMapKeyExprImpl extends ASTWrapperPsiElement implements WarpScriptMapKeyExpr {
 
-  public WarpScriptOneValueExprImpl(@NotNull ASTNode node) {
+  public WarpScriptMapKeyExprImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull WarpScriptVisitor visitor) {
-    visitor.visitOneValueExpr(this);
+    visitor.visitMapKeyExpr(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -28,20 +28,14 @@ public class WarpScriptOneValueExprImpl extends ASTWrapperPsiElement implements 
 
   @Override
   @Nullable
-  public WarpScriptFuncRefExpr getFuncRefExpr() {
-    return findChildByClass(WarpScriptFuncRefExpr.class);
+  public PsiElement getInt() {
+    return findChildByType(INT);
   }
 
   @Override
   @Nullable
-  public WarpScriptMacroRefExpr getMacroRefExpr() {
-    return findChildByClass(WarpScriptMacroRefExpr.class);
-  }
-
-  @Override
-  @NotNull
-  public WarpScriptProcExpr getProcExpr() {
-    return findNotNullChildByClass(WarpScriptProcExpr.class);
+  public PsiElement getString() {
+    return findChildByType(STRING);
   }
 
 }

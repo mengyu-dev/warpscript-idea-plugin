@@ -5,9 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface WarpScriptNativeFuncCallExpr extends PsiElement {
+public interface WarpScriptMacroRefExpr extends PsiElement {
 
   @NotNull
-  PsiElement getId();
+  WarpScriptIdExpr getIdExpr();
 
 }

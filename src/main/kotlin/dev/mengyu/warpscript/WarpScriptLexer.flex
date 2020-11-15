@@ -48,6 +48,8 @@ ID=[\p{Alnum}!\\\%&()*+,\-./:;<=>?\[\\\]\^_‘{|}~]*
   "$"                { return VAR_PREFIX; }
   "@"                { return MACRO_PREFIX; }
   "NULL"             { return NULL; }
+  "IFT"              { return IFT; }
+  "IFTE"             { return IFTE; }
   "TRUE"             { return TRUE; }
   "FALSE"            { return FALSE; }
 

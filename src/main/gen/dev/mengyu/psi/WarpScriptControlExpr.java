@@ -5,15 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface WarpScriptOneValueExpr extends PsiElement {
+public interface WarpScriptControlExpr extends PsiElement {
 
   @Nullable
-  WarpScriptFuncRefExpr getFuncRefExpr();
+  WarpScriptIftControlExpr getIftControlExpr();
 
   @Nullable
-  WarpScriptMacroRefExpr getMacroRefExpr();
-
-  @NotNull
-  WarpScriptProcExpr getProcExpr();
+  WarpScriptIfteControlExpr getIfteControlExpr();
 
 }

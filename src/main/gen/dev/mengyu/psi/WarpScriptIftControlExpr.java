@@ -5,9 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface WarpScriptMacroCallExpr extends PsiElement {
+public interface WarpScriptIftControlExpr extends PsiElement {
 
   @NotNull
-  WarpScriptIdExpr getIdExpr();
+  List<WarpScriptMacroExpr> getMacroExprList();
+
+  @NotNull
+  List<WarpScriptMacroRefExpr> getMacroRefExprList();
 
 }

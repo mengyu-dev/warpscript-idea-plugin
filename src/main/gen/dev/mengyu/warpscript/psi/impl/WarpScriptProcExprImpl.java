@@ -28,14 +28,20 @@ public class WarpScriptProcExprImpl extends ASTWrapperPsiElement implements Warp
 
   @Override
   @NotNull
-  public List<WarpScriptFuncCallExpr> getFuncCallExprList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, WarpScriptFuncCallExpr.class);
+  public List<WarpScriptControlExpr> getControlExprList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, WarpScriptControlExpr.class);
   }
 
   @Override
   @NotNull
   public List<WarpScriptRawTypeExpr> getRawTypeExprList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, WarpScriptRawTypeExpr.class);
+  }
+
+  @Override
+  @NotNull
+  public List<WarpScriptRefExpr> getRefExprList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, WarpScriptRefExpr.class);
   }
 
 }

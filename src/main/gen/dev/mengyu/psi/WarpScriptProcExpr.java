@@ -8,9 +8,12 @@ import com.intellij.psi.PsiElement;
 public interface WarpScriptProcExpr extends PsiElement {
 
   @NotNull
-  List<WarpScriptFuncCallExpr> getFuncCallExprList();
+  List<WarpScriptControlExpr> getControlExprList();
 
   @NotNull
   List<WarpScriptRawTypeExpr> getRawTypeExprList();
+
+  @NotNull
+  List<WarpScriptRefExpr> getRefExprList();
 
 }

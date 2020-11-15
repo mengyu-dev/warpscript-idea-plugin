@@ -54,5 +54,4 @@ class WarpScriptParserDefinition : ParserDefinition {
     override fun spaceExistenceTypeBetweenTokens(left: ASTNode, right: ASTNode): SpaceRequirements {
         return SpaceRequirements.MUST
     }
-
 }

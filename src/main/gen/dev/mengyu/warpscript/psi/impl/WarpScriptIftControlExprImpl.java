@@ -11,14 +11,14 @@ import static dev.mengyu.warpscript.psi.WarpScriptTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import dev.mengyu.psi.*;
 
-public class WarpScriptOneValueExprImpl extends ASTWrapperPsiElement implements WarpScriptOneValueExpr {
+public class WarpScriptIftControlExprImpl extends ASTWrapperPsiElement implements WarpScriptIftControlExpr {
 
-  public WarpScriptOneValueExprImpl(@NotNull ASTNode node) {
+  public WarpScriptIftControlExprImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull WarpScriptVisitor visitor) {
-    visitor.visitOneValueExpr(this);
+    visitor.visitIftControlExpr(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -27,21 +27,15 @@ public class WarpScriptOneValueExprImpl extends ASTWrapperPsiElement implements 
   }
 
   @Override
-  @Nullable
-  public WarpScriptFuncRefExpr getFuncRefExpr() {
-    return findChildByClass(WarpScriptFuncRefExpr.class);
-  }
-
-  @Override
-  @Nullable
-  public WarpScriptMacroRefExpr getMacroRefExpr() {
-    return findChildByClass(WarpScriptMacroRefExpr.class);
+  @NotNull
+  public List<WarpScriptMacroExpr> getMacroExprList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, WarpScriptMacroExpr.class);
   }
 
   @Override
   @NotNull
-  public WarpScriptProcExpr getProcExpr() {
-    return findNotNullChildByClass(WarpScriptProcExpr.class);
+  public List<WarpScriptMacroRefExpr> getMacroRefExprList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, WarpScriptMacroRefExpr.class);
   }
 
 }

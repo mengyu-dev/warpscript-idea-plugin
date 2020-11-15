@@ -11,14 +11,14 @@ import static dev.mengyu.warpscript.psi.WarpScriptTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import dev.mengyu.psi.*;
 
-public class WarpScriptFuncCallExprImpl extends ASTWrapperPsiElement implements WarpScriptFuncCallExpr {
+public class WarpScriptRefExprImpl extends ASTWrapperPsiElement implements WarpScriptRefExpr {
 
-  public WarpScriptFuncCallExprImpl(@NotNull ASTNode node) {
+  public WarpScriptRefExprImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull WarpScriptVisitor visitor) {
-    visitor.visitFuncCallExpr(this);
+    visitor.visitRefExpr(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -28,26 +28,20 @@ public class WarpScriptFuncCallExprImpl extends ASTWrapperPsiElement implements 
 
   @Override
   @Nullable
-  public WarpScriptExtensionCallExpr getExtensionCallExpr() {
-    return findChildByClass(WarpScriptExtensionCallExpr.class);
+  public WarpScriptFuncRefExpr getFuncRefExpr() {
+    return findChildByClass(WarpScriptFuncRefExpr.class);
   }
 
   @Override
   @Nullable
-  public WarpScriptMacroCallExpr getMacroCallExpr() {
-    return findChildByClass(WarpScriptMacroCallExpr.class);
+  public WarpScriptMacroRefExpr getMacroRefExpr() {
+    return findChildByClass(WarpScriptMacroRefExpr.class);
   }
 
   @Override
   @Nullable
-  public WarpScriptNativeFuncCallExpr getNativeFuncCallExpr() {
-    return findChildByClass(WarpScriptNativeFuncCallExpr.class);
-  }
-
-  @Override
-  @Nullable
-  public WarpScriptVariableCallExpr getVariableCallExpr() {
-    return findChildByClass(WarpScriptVariableCallExpr.class);
+  public WarpScriptVariableRefExpr getVariableRefExpr() {
+    return findChildByClass(WarpScriptVariableRefExpr.class);
   }
 
 }

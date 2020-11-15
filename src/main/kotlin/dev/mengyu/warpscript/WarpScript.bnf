@@ -28,6 +28,12 @@
     MACRO_PREFIX           = '@'
     NULL                   = 'NULL'
 
+// control flow
+    IFT                    = 'IFT'
+    IFTE                    = 'IFTE'
+
+
+
     space='regexp:\s+'
     comment='regexp:(//|#).*'
     int='regexp:\d+'
@@ -42,25 +48,31 @@
 
 //root ::= !<<eof>> mul_string_expr
 root ::= !<<eof>> proc_expr
-proc_expr ::=  (func_call_expr | raw_type_expr)*
+proc_expr ::=  ( control_expr | ref_expr | raw_type_expr)*
 
 macro_expr ::= LBLOCK proc_expr? RBLOCK
 //macro_file_expr ::=  (raw_type_expr proc_expr)? macro_expr proc_expr?
 
-func_call_expr ::=  macro_call_expr | variable_call_expr | extension_call_expr | native_func_call_expr
+ref_expr ::=  macro_ref_expr | variable_ref_expr | func_ref_expr 
 id_expr ::= id  | int  | double
-macro_call_expr ::= MACRO_PREFIX id_expr
-variable_call_expr ::= VAR_PREFIX id_expr
-extension_call_expr ::= id
-native_func_call_expr ::= id
+macro_ref_expr ::= MACRO_PREFIX id_expr
+variable_ref_expr ::= VAR_PREFIX id_expr
+func_ref_expr ::= id
 
-raw_type_expr ::= literal_expr | variable_call_expr | macro_expr |  list_expr | set_expr | map_expr
+raw_type_expr ::= literal_expr | variable_ref_expr | macro_expr |  list_expr | set_expr | map_expr
 bool_literal_expr ::= TRUE | FALSE
 string_literal_expr ::= string | mulstring
-one_value_expr ::=  proc_expr [ macro_call_expr | extension_call_expr | native_func_call_expr ]  // todo
+one_value_expr ::=  proc_expr [ macro_ref_expr | func_ref_expr ]  // todo
 literal_expr ::= int | double | string_literal_expr | bool_literal_expr | NULL
 list_expr ::= LBRACK one_value_expr  RBRACK {pin = 1}
 set_expr ::= LPAREN one_value_expr  RPAREN {pin = 1}
 
-map_expr ::= LBRACE { (string | int )  ( raw_type_expr | one_value_expr)  }*  RBRACE {pin = 1}
+map_key_expr ::= string | int
+map_value_expr ::=  raw_type_expr | one_value_expr
+map_entry_expr ::= map_key_expr map_value_expr
+map_expr ::= LBRACE map_entry_expr*  RBRACE {pin = 1}
 
+//control flow
+control_expr ::= ift_control_expr | ifte_control_expr
+ift_control_expr ::= [ macro_expr | macro_ref_expr ] [ macro_expr | macro_ref_expr ] IFT
+ifte_control_expr ::= ([  macro_expr | macro_ref_expr ])? [ macro_expr | macro_ref_expr ] [ macro_expr | macro_ref_expr ] IFTE

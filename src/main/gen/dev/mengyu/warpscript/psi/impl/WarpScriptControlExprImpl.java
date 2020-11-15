@@ -11,14 +11,14 @@ import static dev.mengyu.warpscript.psi.WarpScriptTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import dev.mengyu.psi.*;
 
-public class WarpScriptVariableCallExprImpl extends ASTWrapperPsiElement implements WarpScriptVariableCallExpr {
+public class WarpScriptControlExprImpl extends ASTWrapperPsiElement implements WarpScriptControlExpr {
 
-  public WarpScriptVariableCallExprImpl(@NotNull ASTNode node) {
+  public WarpScriptControlExprImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull WarpScriptVisitor visitor) {
-    visitor.visitVariableCallExpr(this);
+    visitor.visitControlExpr(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -27,9 +27,15 @@ public class WarpScriptVariableCallExprImpl extends ASTWrapperPsiElement impleme
   }
 
   @Override
-  @NotNull
-  public WarpScriptIdExpr getIdExpr() {
-    return findNotNullChildByClass(WarpScriptIdExpr.class);
+  @Nullable
+  public WarpScriptIftControlExpr getIftControlExpr() {
+    return findChildByClass(WarpScriptIftControlExpr.class);
+  }
+
+  @Override
+  @Nullable
+  public WarpScriptIfteControlExpr getIfteControlExpr() {
+    return findChildByClass(WarpScriptIfteControlExpr.class);
   }
 
 }

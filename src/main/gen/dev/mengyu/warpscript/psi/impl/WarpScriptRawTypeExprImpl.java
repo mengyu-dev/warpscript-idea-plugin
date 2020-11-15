@@ -58,8 +58,8 @@ public class WarpScriptRawTypeExprImpl extends ASTWrapperPsiElement implements W
 
   @Override
   @Nullable
-  public WarpScriptVariableCallExpr getVariableCallExpr() {
-    return findChildByClass(WarpScriptVariableCallExpr.class);
+  public WarpScriptVariableRefExpr getVariableRefExpr() {
+    return findChildByClass(WarpScriptVariableRefExpr.class);
   }
 
 }

@@ -9,26 +9,33 @@ import dev.mengyu.warpscript.psi.impl.*;
 public interface WarpScriptTypes {
 
   IElementType BOOL_LITERAL_EXPR = new WarpScriptElementType("BOOL_LITERAL_EXPR");
-  IElementType EXTENSION_CALL_EXPR = new WarpScriptElementType("EXTENSION_CALL_EXPR");
-  IElementType FUNC_CALL_EXPR = new WarpScriptElementType("FUNC_CALL_EXPR");
+  IElementType CONTROL_EXPR = new WarpScriptElementType("CONTROL_EXPR");
+  IElementType FUNC_REF_EXPR = new WarpScriptElementType("FUNC_REF_EXPR");
   IElementType ID_EXPR = new WarpScriptElementType("ID_EXPR");
+  IElementType IFTE_CONTROL_EXPR = new WarpScriptElementType("IFTE_CONTROL_EXPR");
+  IElementType IFT_CONTROL_EXPR = new WarpScriptElementType("IFT_CONTROL_EXPR");
   IElementType LIST_EXPR = new WarpScriptElementType("LIST_EXPR");
   IElementType LITERAL_EXPR = new WarpScriptElementType("LITERAL_EXPR");
-  IElementType MACRO_CALL_EXPR = new WarpScriptElementType("MACRO_CALL_EXPR");
   IElementType MACRO_EXPR = new WarpScriptElementType("MACRO_EXPR");
+  IElementType MACRO_REF_EXPR = new WarpScriptElementType("MACRO_REF_EXPR");
+  IElementType MAP_ENTRY_EXPR = new WarpScriptElementType("MAP_ENTRY_EXPR");
   IElementType MAP_EXPR = new WarpScriptElementType("MAP_EXPR");
-  IElementType NATIVE_FUNC_CALL_EXPR = new WarpScriptElementType("NATIVE_FUNC_CALL_EXPR");
+  IElementType MAP_KEY_EXPR = new WarpScriptElementType("MAP_KEY_EXPR");
+  IElementType MAP_VALUE_EXPR = new WarpScriptElementType("MAP_VALUE_EXPR");
   IElementType ONE_VALUE_EXPR = new WarpScriptElementType("ONE_VALUE_EXPR");
   IElementType PROC_EXPR = new WarpScriptElementType("PROC_EXPR");
   IElementType RAW_TYPE_EXPR = new WarpScriptElementType("RAW_TYPE_EXPR");
+  IElementType REF_EXPR = new WarpScriptElementType("REF_EXPR");
   IElementType SET_EXPR = new WarpScriptElementType("SET_EXPR");
   IElementType STRING_LITERAL_EXPR = new WarpScriptElementType("STRING_LITERAL_EXPR");
-  IElementType VARIABLE_CALL_EXPR = new WarpScriptElementType("VARIABLE_CALL_EXPR");
+  IElementType VARIABLE_REF_EXPR = new WarpScriptElementType("VARIABLE_REF_EXPR");
 
   IElementType COMMENT = new WarpScriptTokenType("comment");
   IElementType DOUBLE = new WarpScriptTokenType("double");
   IElementType FALSE = new WarpScriptTokenType("FALSE");
   IElementType ID = new WarpScriptTokenType("id");
+  IElementType IFT = new WarpScriptTokenType("IFT");
+  IElementType IFTE = new WarpScriptTokenType("IFTE");
   IElementType INT = new WarpScriptTokenType("int");
   IElementType LBLOCK = new WarpScriptTokenType("<%");
   IElementType LBRACE = new WarpScriptTokenType("{");
@@ -51,14 +58,20 @@ public interface WarpScriptTypes {
       if (type == BOOL_LITERAL_EXPR) {
         return new WarpScriptBoolLiteralExprImpl(node);
       }
-      else if (type == EXTENSION_CALL_EXPR) {
-        return new WarpScriptExtensionCallExprImpl(node);
+      else if (type == CONTROL_EXPR) {
+        return new WarpScriptControlExprImpl(node);
       }
-      else if (type == FUNC_CALL_EXPR) {
-        return new WarpScriptFuncCallExprImpl(node);
+      else if (type == FUNC_REF_EXPR) {
+        return new WarpScriptFuncRefExprImpl(node);
       }
       else if (type == ID_EXPR) {
         return new WarpScriptIdExprImpl(node);
+      }
+      else if (type == IFTE_CONTROL_EXPR) {
+        return new WarpScriptIfteControlExprImpl(node);
+      }
+      else if (type == IFT_CONTROL_EXPR) {
+        return new WarpScriptIftControlExprImpl(node);
       }
       else if (type == LIST_EXPR) {
         return new WarpScriptListExprImpl(node);
@@ -66,17 +79,23 @@ public interface WarpScriptTypes {
       else if (type == LITERAL_EXPR) {
         return new WarpScriptLiteralExprImpl(node);
       }
-      else if (type == MACRO_CALL_EXPR) {
-        return new WarpScriptMacroCallExprImpl(node);
-      }
       else if (type == MACRO_EXPR) {
         return new WarpScriptMacroExprImpl(node);
+      }
+      else if (type == MACRO_REF_EXPR) {
+        return new WarpScriptMacroRefExprImpl(node);
+      }
+      else if (type == MAP_ENTRY_EXPR) {
+        return new WarpScriptMapEntryExprImpl(node);
       }
       else if (type == MAP_EXPR) {
         return new WarpScriptMapExprImpl(node);
       }
-      else if (type == NATIVE_FUNC_CALL_EXPR) {
-        return new WarpScriptNativeFuncCallExprImpl(node);
+      else if (type == MAP_KEY_EXPR) {
+        return new WarpScriptMapKeyExprImpl(node);
+      }
+      else if (type == MAP_VALUE_EXPR) {
+        return new WarpScriptMapValueExprImpl(node);
       }
       else if (type == ONE_VALUE_EXPR) {
         return new WarpScriptOneValueExprImpl(node);
@@ -87,14 +106,17 @@ public interface WarpScriptTypes {
       else if (type == RAW_TYPE_EXPR) {
         return new WarpScriptRawTypeExprImpl(node);
       }
+      else if (type == REF_EXPR) {
+        return new WarpScriptRefExprImpl(node);
+      }
       else if (type == SET_EXPR) {
         return new WarpScriptSetExprImpl(node);
       }
       else if (type == STRING_LITERAL_EXPR) {
         return new WarpScriptStringLiteralExprImpl(node);
       }
-      else if (type == VARIABLE_CALL_EXPR) {
-        return new WarpScriptVariableCallExprImpl(node);
+      else if (type == VARIABLE_REF_EXPR) {
+        return new WarpScriptVariableRefExprImpl(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }
