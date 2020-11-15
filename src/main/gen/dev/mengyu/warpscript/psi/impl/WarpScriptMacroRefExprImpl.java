@@ -27,9 +27,21 @@ public class WarpScriptMacroRefExprImpl extends ASTWrapperPsiElement implements 
   }
 
   @Override
-  @NotNull
-  public WarpScriptIdExpr getIdExpr() {
-    return findNotNullChildByClass(WarpScriptIdExpr.class);
+  @Nullable
+  public WarpScriptLiteralDouble getLiteralDouble() {
+    return findChildByClass(WarpScriptLiteralDouble.class);
+  }
+
+  @Override
+  @Nullable
+  public WarpScriptLiteralLong getLiteralLong() {
+    return findChildByClass(WarpScriptLiteralLong.class);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getId() {
+    return findChildByType(ID);
   }
 
 }

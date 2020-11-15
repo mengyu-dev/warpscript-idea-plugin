@@ -74,18 +74,6 @@ public class WarpScriptParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // id
-  public static boolean id_expr(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "id_expr")) return false;
-    if (!nextTokenIs(b, ID)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, ID);
-    exit_section_(b, m, ID_EXPR, r);
-    return r;
-  }
-
-  /* ********************************************************** */
   // [ macro_expr | macro_ref_expr ] [ macro_expr | macro_ref_expr ] IFT
   public static boolean ift_control_expr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ift_control_expr")) return false;
@@ -277,15 +265,25 @@ public class WarpScriptParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // MACRO_PREFIX id_expr
+  // MACRO_PREFIX ( literal_long | literal_double | id )
   public static boolean macro_ref_expr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "macro_ref_expr")) return false;
     if (!nextTokenIs(b, MACRO_PREFIX)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, MACRO_PREFIX);
-    r = r && id_expr(b, l + 1);
+    r = r && macro_ref_expr_1(b, l + 1);
     exit_section_(b, m, MACRO_REF_EXPR, r);
+    return r;
+  }
+
+  // literal_long | literal_double | id
+  private static boolean macro_ref_expr_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "macro_ref_expr_1")) return false;
+    boolean r;
+    r = literal_long(b, l + 1);
+    if (!r) r = literal_double(b, l + 1);
+    if (!r) r = consumeToken(b, ID);
     return r;
   }
 
@@ -485,15 +483,25 @@ public class WarpScriptParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // VAR_PREFIX id_expr
+  // VAR_PREFIX ( literal_long | literal_double | id )
   public static boolean variable_ref_expr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "variable_ref_expr")) return false;
     if (!nextTokenIs(b, VAR_PREFIX)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, VAR_PREFIX);
-    r = r && id_expr(b, l + 1);
+    r = r && variable_ref_expr_1(b, l + 1);
     exit_section_(b, m, VARIABLE_REF_EXPR, r);
+    return r;
+  }
+
+  // literal_long | literal_double | id
+  private static boolean variable_ref_expr_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "variable_ref_expr_1")) return false;
+    boolean r;
+    r = literal_long(b, l + 1);
+    if (!r) r = literal_double(b, l + 1);
+    if (!r) r = consumeToken(b, ID);
     return r;
   }
 

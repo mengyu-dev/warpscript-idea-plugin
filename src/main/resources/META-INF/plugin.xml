@@ -14,6 +14,10 @@
                   fieldName="INSTANCE" language="Warpscript" extensions="mc2"/>
         <lang.parserDefinition language="Warpscript"
                                implementationClass="dev.mengyu.warpscript.psi.WarpScriptParserDefinition"/>
+        <lang.syntaxHighlighterFactory language="Warpscript"
+                                       implementationClass="dev.mengyu.warpscript.WarpScriptHighlighterFactory"/>
+        <completion.contributor language="Warpscript"
+                                implementationClass="dev.mengyu.warpscript.contributor.WarpScriptCompletionContributor"/>
     </extensions>
 
     <actions>

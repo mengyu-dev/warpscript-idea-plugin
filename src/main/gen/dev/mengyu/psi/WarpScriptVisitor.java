@@ -19,10 +19,6 @@ public class WarpScriptVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitIdExpr(@NotNull WarpScriptIdExpr o) {
-    visitPsiElement(o);
-  }
-
   public void visitIftControlExpr(@NotNull WarpScriptIftControlExpr o) {
     visitPsiElement(o);
   }

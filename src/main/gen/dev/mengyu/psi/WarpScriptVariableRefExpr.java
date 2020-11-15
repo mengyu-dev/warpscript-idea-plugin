@@ -7,10 +7,16 @@ import com.intellij.psi.PsiElement;
 
 public interface WarpScriptVariableRefExpr extends PsiElement {
 
-  @NotNull
-  WarpScriptIdExpr getIdExpr();
+  @Nullable
+  WarpScriptLiteralDouble getLiteralDouble();
+
+  @Nullable
+  WarpScriptLiteralLong getLiteralLong();
 
   @NotNull
   PsiElement getVarPrefix();
+
+  @Nullable
+  PsiElement getId();
 
 }

@@ -7,7 +7,13 @@ import com.intellij.psi.PsiElement;
 
 public interface WarpScriptMacroRefExpr extends PsiElement {
 
-  @NotNull
-  WarpScriptIdExpr getIdExpr();
+  @Nullable
+  WarpScriptLiteralDouble getLiteralDouble();
+
+  @Nullable
+  WarpScriptLiteralLong getLiteralLong();
+
+  @Nullable
+  PsiElement getId();
 
 }

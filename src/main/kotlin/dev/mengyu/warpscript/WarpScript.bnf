@@ -58,10 +58,9 @@ root ::= !<<eof>> proc_expr
 proc_expr ::=  ( control_expr | ref_expr | typed_expr )*
 
 
-ref_expr ::=  macro_ref_expr | variable_ref_expr | func_ref_expr 
-id_expr ::= id
-macro_ref_expr ::= MACRO_PREFIX id_expr
-variable_ref_expr ::= VAR_PREFIX id_expr
+ref_expr ::=  macro_ref_expr | variable_ref_expr | func_ref_expr
+macro_ref_expr ::= MACRO_PREFIX ( literal_long | literal_double | id )
+variable_ref_expr ::= VAR_PREFIX ( literal_long | literal_double | id )
 func_ref_expr ::= id
 
 macro_expr ::= LBLOCK proc_expr? RBLOCK

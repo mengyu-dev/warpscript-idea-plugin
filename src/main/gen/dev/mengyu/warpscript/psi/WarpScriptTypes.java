@@ -11,7 +11,6 @@ public interface WarpScriptTypes {
   IElementType BOOL_LITERAL_EXPR = new WarpScriptElementType("BOOL_LITERAL_EXPR");
   IElementType CONTROL_EXPR = new WarpScriptElementType("CONTROL_EXPR");
   IElementType FUNC_REF_EXPR = new WarpScriptElementType("FUNC_REF_EXPR");
-  IElementType ID_EXPR = new WarpScriptElementType("ID_EXPR");
   IElementType IFTE_CONTROL_EXPR = new WarpScriptElementType("IFTE_CONTROL_EXPR");
   IElementType IFT_CONTROL_EXPR = new WarpScriptElementType("IFT_CONTROL_EXPR");
   IElementType LIST_EXPR = new WarpScriptElementType("LIST_EXPR");
@@ -70,9 +69,6 @@ public interface WarpScriptTypes {
       }
       else if (type == FUNC_REF_EXPR) {
         return new WarpScriptFuncRefExprImpl(node);
-      }
-      else if (type == ID_EXPR) {
-        return new WarpScriptIdExprImpl(node);
       }
       else if (type == IFTE_CONTROL_EXPR) {
         return new WarpScriptIfteControlExprImpl(node);

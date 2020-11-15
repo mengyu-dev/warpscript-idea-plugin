@@ -27,15 +27,27 @@ public class WarpScriptVariableRefExprImpl extends ASTWrapperPsiElement implemen
   }
 
   @Override
-  @NotNull
-  public WarpScriptIdExpr getIdExpr() {
-    return findNotNullChildByClass(WarpScriptIdExpr.class);
+  @Nullable
+  public WarpScriptLiteralDouble getLiteralDouble() {
+    return findChildByClass(WarpScriptLiteralDouble.class);
+  }
+
+  @Override
+  @Nullable
+  public WarpScriptLiteralLong getLiteralLong() {
+    return findChildByClass(WarpScriptLiteralLong.class);
   }
 
   @Override
   @NotNull
   public PsiElement getVarPrefix() {
     return findNotNullChildByType(VAR_PREFIX);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getId() {
+    return findChildByType(ID);
   }
 
 }
