@@ -7,7 +7,19 @@ import com.intellij.psi.PsiElement;
 
 public class WarpScriptVisitor extends PsiElementVisitor {
 
+  public void visitBasicValueExpr(@NotNull WarpScriptBasicValueExpr o) {
+    visitPsiElement(o);
+  }
+
   public void visitBoolLiteralExpr(@NotNull WarpScriptBoolLiteralExpr o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCallExpr(@NotNull WarpScriptCallExpr o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCollectionValueExpr(@NotNull WarpScriptCollectionValueExpr o) {
     visitPsiElement(o);
   }
 
@@ -15,7 +27,19 @@ public class WarpScriptVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitFuncRefExpr(@NotNull WarpScriptFuncRefExpr o) {
+  public void visitDoubleLiteralExpr(@NotNull WarpScriptDoubleLiteralExpr o) {
+    visitPsiElement(o);
+  }
+
+  public void visitExpr(@NotNull WarpScriptExpr o) {
+    visitPsiElement(o);
+  }
+
+  public void visitExtensionFuncCallExpr(@NotNull WarpScriptExtensionFuncCallExpr o) {
+    visitPsiElement(o);
+  }
+
+  public void visitFuncCallExpr(@NotNull WarpScriptFuncCallExpr o) {
     visitPsiElement(o);
   }
 
@@ -31,23 +55,15 @@ public class WarpScriptVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitLiteralDouble(@NotNull WarpScriptLiteralDouble o) {
+  public void visitLongLiteralExpr(@NotNull WarpScriptLongLiteralExpr o) {
     visitPsiElement(o);
   }
 
-  public void visitLiteralExpr(@NotNull WarpScriptLiteralExpr o) {
+  public void visitMacroCallExpr(@NotNull WarpScriptMacroCallExpr o) {
     visitPsiElement(o);
   }
 
-  public void visitLiteralLong(@NotNull WarpScriptLiteralLong o) {
-    visitPsiElement(o);
-  }
-
-  public void visitMacroExpr(@NotNull WarpScriptMacroExpr o) {
-    visitPsiElement(o);
-  }
-
-  public void visitMacroRefExpr(@NotNull WarpScriptMacroRefExpr o) {
+  public void visitMacroValueExpr(@NotNull WarpScriptMacroValueExpr o) {
     visitPsiElement(o);
   }
 
@@ -67,15 +83,11 @@ public class WarpScriptVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitOneValueExpr(@NotNull WarpScriptOneValueExpr o) {
+  public void visitNativeFuncCallExpr(@NotNull WarpScriptNativeFuncCallExpr o) {
     visitPsiElement(o);
   }
 
-  public void visitProcExpr(@NotNull WarpScriptProcExpr o) {
-    visitPsiElement(o);
-  }
-
-  public void visitRefExpr(@NotNull WarpScriptRefExpr o) {
+  public void visitNullLiteralExpr(@NotNull WarpScriptNullLiteralExpr o) {
     visitPsiElement(o);
   }
 
@@ -83,15 +95,19 @@ public class WarpScriptVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitSingleValueExpr(@NotNull WarpScriptSingleValueExpr o) {
+    visitPsiElement(o);
+  }
+
   public void visitStringLiteralExpr(@NotNull WarpScriptStringLiteralExpr o) {
     visitPsiElement(o);
   }
 
-  public void visitTypedExpr(@NotNull WarpScriptTypedExpr o) {
+  public void visitValueExpr(@NotNull WarpScriptValueExpr o) {
     visitPsiElement(o);
   }
 
-  public void visitVariableRefExpr(@NotNull WarpScriptVariableRefExpr o) {
+  public void visitVariableValueExpr(@NotNull WarpScriptVariableValueExpr o) {
     visitPsiElement(o);
   }
 

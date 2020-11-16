@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface WarpScriptListExpr extends PsiElement {
 
-  @Nullable
-  WarpScriptOneValueExpr getOneValueExpr();
+  @NotNull
+  List<WarpScriptSingleValueExpr> getSingleValueExprList();
 
 }

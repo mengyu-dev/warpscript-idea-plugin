@@ -11,14 +11,14 @@ import static dev.mengyu.warpscript.psi.WarpScriptTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import dev.mengyu.psi.*;
 
-public class WarpScriptStringLiteralExprImpl extends ASTWrapperPsiElement implements WarpScriptStringLiteralExpr {
+public class WarpScriptValueExprImpl extends ASTWrapperPsiElement implements WarpScriptValueExpr {
 
-  public WarpScriptStringLiteralExprImpl(@NotNull ASTNode node) {
+  public WarpScriptValueExprImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull WarpScriptVisitor visitor) {
-    visitor.visitStringLiteralExpr(this);
+    visitor.visitValueExpr(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -28,14 +28,26 @@ public class WarpScriptStringLiteralExprImpl extends ASTWrapperPsiElement implem
 
   @Override
   @Nullable
-  public PsiElement getMstring() {
-    return findChildByType(MSTRING);
+  public WarpScriptBasicValueExpr getBasicValueExpr() {
+    return findChildByClass(WarpScriptBasicValueExpr.class);
   }
 
   @Override
   @Nullable
-  public PsiElement getString() {
-    return findChildByType(STRING);
+  public WarpScriptCollectionValueExpr getCollectionValueExpr() {
+    return findChildByClass(WarpScriptCollectionValueExpr.class);
+  }
+
+  @Override
+  @Nullable
+  public WarpScriptMacroValueExpr getMacroValueExpr() {
+    return findChildByClass(WarpScriptMacroValueExpr.class);
+  }
+
+  @Override
+  @Nullable
+  public WarpScriptVariableValueExpr getVariableValueExpr() {
+    return findChildByClass(WarpScriptVariableValueExpr.class);
   }
 
 }

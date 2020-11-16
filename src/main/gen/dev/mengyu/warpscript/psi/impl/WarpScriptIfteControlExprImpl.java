@@ -28,14 +28,14 @@ public class WarpScriptIfteControlExprImpl extends ASTWrapperPsiElement implemen
 
   @Override
   @NotNull
-  public List<WarpScriptMacroExpr> getMacroExprList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, WarpScriptMacroExpr.class);
+  public List<WarpScriptMacroCallExpr> getMacroCallExprList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, WarpScriptMacroCallExpr.class);
   }
 
   @Override
   @NotNull
-  public List<WarpScriptMacroRefExpr> getMacroRefExprList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, WarpScriptMacroRefExpr.class);
+  public List<WarpScriptMacroValueExpr> getMacroValueExprList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, WarpScriptMacroValueExpr.class);
   }
 
 }

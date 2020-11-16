@@ -5,12 +5,15 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface WarpScriptStringLiteralExpr extends PsiElement {
+public interface WarpScriptVariableValueExpr extends PsiElement {
 
   @Nullable
-  PsiElement getMstring();
+  WarpScriptDoubleLiteralExpr getDoubleLiteralExpr();
 
   @Nullable
-  PsiElement getString();
+  WarpScriptLongLiteralExpr getLongLiteralExpr();
+
+  @NotNull
+  PsiElement getVarPrefix();
 
 }

@@ -27,9 +27,9 @@ public class WarpScriptSetExprImpl extends ASTWrapperPsiElement implements WarpS
   }
 
   @Override
-  @Nullable
-  public WarpScriptOneValueExpr getOneValueExpr() {
-    return findChildByClass(WarpScriptOneValueExpr.class);
+  @NotNull
+  public List<WarpScriptSingleValueExpr> getSingleValueExprList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, WarpScriptSingleValueExpr.class);
   }
 
 }

@@ -12,6 +12,7 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib"))
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.+")
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/

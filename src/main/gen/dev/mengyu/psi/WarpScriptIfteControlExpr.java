@@ -8,9 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface WarpScriptIfteControlExpr extends PsiElement {
 
   @NotNull
-  List<WarpScriptMacroExpr> getMacroExprList();
+  List<WarpScriptMacroCallExpr> getMacroCallExprList();
 
   @NotNull
-  List<WarpScriptMacroRefExpr> getMacroRefExprList();
+  List<WarpScriptMacroValueExpr> getMacroValueExprList();
 
 }

@@ -15,9 +15,9 @@
         <lang.parserDefinition language="Warpscript"
                                implementationClass="dev.mengyu.warpscript.psi.WarpScriptParserDefinition"/>
         <lang.syntaxHighlighterFactory language="Warpscript"
-                                       implementationClass="dev.mengyu.warpscript.WarpScriptHighlighterFactory"/>
+                                       implementationClass="dev.mengyu.warpscript.feature.WarpScriptHighlighterFactory"/>
         <completion.contributor language="Warpscript"
-                                implementationClass="dev.mengyu.warpscript.contributor.WarpScriptCompletionContributor"/>
+                                implementationClass="dev.mengyu.warpscript.feature.WarpScriptCompletionContributor"/>
     </extensions>
 
     <actions>

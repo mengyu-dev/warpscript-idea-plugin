@@ -1,0 +1,91 @@
+{
+
+    parserClass="dev.mengyu.warpscript.WarpScriptParser"
+
+    extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+    psiClassPrefix="WarpScript"
+    psiImplClassSuffix="Impl"
+    psiPackage="dev.mengyu.psi"
+    psiImplPackage="dev.mengyu.warpscript.psi.impl"
+
+    elementTypeHolderClass="dev.mengyu.warpscript.psi.WarpScriptTypes"
+    elementTypeClass="dev.mengyu.warpscript.psi.WarpScriptElementType"
+    tokenTypeClass="dev.mengyu.warpscript.psi.WarpScriptTokenType"
+
+    psiImplUtilClass="dev.mengyu.warpscript.psi.impl.WarpScriptPsiImplUtil"
+
+  tokens=[
+    LBRACE               =  '{'
+    RBRACE               =  '}'
+    LBRACK               =  '['
+    RBRACK               =  ']'
+    LPAREN               =  '('
+    RPAREN               =  ')'
+    LBLOCK               =  '<%'
+    RBLOCK               =  '%>'
+    MACRO_PREFIX         = '@'
+    VAR_PREFIX           = 'regexp:\!?\$'
+    NULL                 = 'NULL'
+    T                    = 'T'
+    TRUE                 = 'true'
+    F                    = 'F'
+    FALSE                = 'false'
+
+// control flow
+    IFT                  = 'IFT'
+    IFTE                 = 'IFTE'
+
+    SPACE='regexp:\s+'
+    LCOMMENT="regexp:(//.*)|(#.*)"
+    BCOMMENT="regexp:/\*(.|\n)*\*/"
+
+    LONG='regexp:[\-\+]?\d+'
+    HEX='regexp:0x\d+'
+    BIT='0b[01]+'
+
+    DOUBLE='regexp:[\-\+]?\d+\.\d*'
+    SDOUBLE='regexp:[\-\+]?\d+\.\d*[eE][\-\+]?\d*'
+
+    STRING="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
+    MSTRING="regexp:<'([^<'>\\]|\\.)*'>" // change to lookup around (?<=<'[\r\n]).*(?<='>)
+    ID="regexp:[\p{Alnum}!\\\%&()*+,\-./:;<=>?\[\\\]\^_‘{|}~]*"// "regexp:[\p{Alnum}\p{Punct}&&[^'@$]]*"
+  ]
+
+}
+
+root ::= !<<eof>> expr
+expr ::=  ( control_expr | call_expr | value_expr )*
+
+call_expr ::= macro_call_expr | func_call_expr
+macro_call_expr ::= MACRO_PREFIX ( long_literal_expr | double_literal_expr | MACRO_ID )
+func_call_expr ::=  extension_func_call_expr | native_func_call_expr
+extension_func_call_expr ::= EXT_FUNC
+native_func_call_expr ::= NATIVE_FUNC
+
+value_expr ::=  variable_value_expr | macro_value_expr | basic_value_expr | collection_value_expr
+macro_value_expr ::= LBLOCK expr? RBLOCK
+variable_value_expr ::= VAR_PREFIX ( long_literal_expr | double_literal_expr | VAR_ID )
+
+basic_value_expr ::= long_literal_expr | double_literal_expr | string_literal_expr | bool_literal_expr | null_literal_expr
+null_literal_expr ::= NULL
+long_literal_expr ::= LONG | HEX | BIT
+double_literal_expr ::= DOUBLE | SDOUBLE
+bool_literal_expr ::= TRUE | FALSE | T | F
+string_literal_expr ::= STRING | MSTRING
+
+collection_value_expr ::=  list_expr | set_expr | map_expr
+single_value_expr ::= ( expr call_expr ) | call_expr | value_expr
+
+list_expr ::= LBRACK single_value_expr*  RBRACK {pin = 1}
+set_expr ::= LPAREN single_value_expr*   RPAREN {pin = 1}
+
+map_key_expr ::= STRING | LONG  | DOUBLE | NULL
+map_value_expr ::= single_value_expr
+map_entry_expr ::= map_key_expr map_value_expr
+map_expr ::= LBRACE  map_entry_expr*  RBRACE {pin = 1}
+
+//control flow
+control_expr ::= ift_control_expr | ifte_control_expr
+ift_control_expr ::= [ macro_value_expr | macro_call_expr ] [ macro_value_expr | macro_call_expr ] IFT
+ifte_control_expr ::= ([  macro_value_expr | macro_call_expr ])? [ macro_value_expr | macro_call_expr ] [ macro_value_expr | macro_call_expr ] IFTE
