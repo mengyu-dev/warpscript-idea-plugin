@@ -7,19 +7,14 @@ import com.intellij.execution.actions.LazyRunConfigurationProducer
 import com.intellij.execution.configurations.*
 import com.intellij.execution.runners.ExecutionEnvironment
 import com.intellij.icons.AllIcons
-import com.intellij.openapi.options.ConfigurationException
+import com.intellij.openapi.components.BaseState
 import com.intellij.openapi.options.SettingsEditor
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.ui.ComponentWithBrowseButton
-import com.intellij.openapi.ui.LabeledComponent
-import com.intellij.openapi.ui.TextFieldWithBrowseButton
 import com.intellij.openapi.util.Ref
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiElement
 import dev.mengyu.warpscript.WarpScriptFileType
 import javax.swing.Icon
-import javax.swing.JComponent
-import javax.swing.JPanel
 
 
 class WarpScriptRunConfigurationType : ConfigurationType {
@@ -48,13 +43,50 @@ class WarpScriptConfigurationFactory constructor(type: ConfigurationType) : Conf
         return FACTORY_NAME
     }
 
+    override fun getOptionsClass(): Class<out BaseState> {
+        return WarpScriptRunConfigurationOptions::class.java
+    }
+
+    override fun getId() = "WarpScript Configuration Factory"
+
     companion object {
         private const val FACTORY_NAME = "WarpScript configuration factory"
     }
 }
 
 class WarpScriptRunConfiguration constructor(project: Project, factory: ConfigurationFactory, name: String) :
-    RunConfigurationBase<Any>(project, factory, name) {
+    RunConfigurationBase<WarpScriptRunConfigurationOptions>(project, factory, name) {
+
+    var logResponseHeadersOnError: Boolean = true
+
+    override fun getOptions(): WarpScriptRunConfigurationOptions {
+        return super.getOptions() as WarpScriptRunConfigurationOptions
+    }
+
+    fun getScriptPath() = options.getScriptPath()
+
+    fun setScriptPath(scriptPath: String) {
+        options.setScriptPath(scriptPath)
+    }
+
+    fun getEndpoint() = options.getEndpoint()
+
+    fun setEndpoint(endpoint: String) {
+        options.setEndpoint(endpoint)
+    }
+
+    fun getHttpHeadersLog() = options.getHttpHeadersLog()
+
+    fun setHttpHeadersLog(log: Boolean) {
+        options.setHttpHeadersLog(log)
+    }
+
+    fun getCompressor() = options.getCompressor()
+
+    fun setCompressor(compress: Boolean) {
+        options.setCompressor(compress)
+    }
+
 
     override fun getConfigurationEditor(): SettingsEditor<out RunConfiguration> {
         return WarpScriptSettingsEditor()
@@ -66,28 +98,10 @@ class WarpScriptRunConfiguration constructor(project: Project, factory: Configur
 
     @Throws(ExecutionException::class)
     override fun getState(executor: Executor, executionEnvironment: ExecutionEnvironment): RunProfileState {
-        return WarpScriptRunState(executionEnvironment)
+        return WarpScriptRunState(executionEnvironment, this)
     }
 }
 
-class WarpScriptSettingsEditor : SettingsEditor<WarpScriptRunConfiguration>() {
-    private lateinit var myPanel: JPanel
-    private lateinit var myMainClass: LabeledComponent<ComponentWithBrowseButton<*>>
-    override fun resetEditorFrom(demoRunConfiguration: WarpScriptRunConfiguration) {}
-
-    @Throws(ConfigurationException::class)
-    override fun applyEditorTo(demoRunConfiguration: WarpScriptRunConfiguration) {
-    }
-
-    override fun createEditor(): JComponent {
-        return myPanel
-    }
-
-    private fun createUIComponents() {
-        myMainClass = LabeledComponent<ComponentWithBrowseButton<*>>()
-        myMainClass.component = TextFieldWithBrowseButton()
-    }
-}
 
 class WarpScriptRunConfigurationProducer : LazyRunConfigurationProducer<WarpScriptRunConfiguration>() {
 
@@ -107,11 +121,12 @@ class WarpScriptRunConfigurationProducer : LazyRunConfigurationProducer<WarpScri
     ): Boolean {
         val file = getWarpScripFileFromContext(context) ?: return false
         configuration.name = file.name
+        configuration.setScriptPath(file.path)
         return true
     }
 
-    private fun getWarpScripFileFromContext(context: ConfigurationContext): VirtualFile? {
-        return context.psiLocation?.containingFile?.originalFile?.virtualFile?.takeIf { it.extension == WarpScriptFileType.defaultExtension }
-    }
+}
 
+fun getWarpScripFileFromContext(context: ConfigurationContext): VirtualFile? {
+    return context.psiLocation?.containingFile?.originalFile?.virtualFile?.takeIf { it.extension == WarpScriptFileType.defaultExtension }
 }

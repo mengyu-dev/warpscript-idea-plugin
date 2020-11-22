@@ -21,6 +21,8 @@
         <configurationType implementation="dev.mengyu.warpscript.feature.run.WarpScriptRunConfigurationType"/>
         <runConfigurationProducer
                 implementation="dev.mengyu.warpscript.feature.run.WarpScriptRunConfigurationProducer"/>
+        <runLineMarkerContributor
+                implementationClass="dev.mengyu.warpscript.feature.run.WarpScriptRunLineMarkerContributor"/>
     </extensions>
 
     <actions>

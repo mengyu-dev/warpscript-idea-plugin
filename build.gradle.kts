@@ -14,6 +14,7 @@ dependencies {
     implementation(kotlin("stdlib"))
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.+")
     implementation("com.squareup.okhttp3:okhttp:4.9.0")
+    implementation("com.google.code.gson:gson:2.8.6")
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
