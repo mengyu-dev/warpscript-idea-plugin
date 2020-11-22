@@ -50,7 +50,7 @@ class WarpScriptConfigurationFactory constructor(type: ConfigurationType) : Conf
 }
 
 class WarpScriptRunConfiguration constructor(project: Project, factory: ConfigurationFactory, name: String) :
-    RunConfigurationBase<Any>(project, factory, name) {
+    LocatableConfigurationBase<Any>(project, factory, name) {
     var scriptPath: String? = null
     var endpoint: String = "http://localhost:8080/api/v0/exec"
     var httpHeaders: Boolean = false
@@ -72,15 +72,19 @@ class WarpScriptRunConfiguration constructor(project: Project, factory: Configur
 
 
 class WarpScriptRunConfigurationProducer : LazyRunConfigurationProducer<WarpScriptRunConfiguration>() {
+    private val warpScriptRunConfigurationType = WarpScriptRunConfigurationType()
 
     override fun getConfigurationFactory(): ConfigurationFactory {
-        return WarpScriptConfigurationFactory(WarpScriptRunConfigurationType())
+        return warpScriptRunConfigurationType.configurationFactories[0]
     }
 
     override fun isConfigurationFromContext(
         configuration: WarpScriptRunConfiguration,
         context: ConfigurationContext
-    ) = getWarpScripFileFromContext(context) != null
+    ): Boolean {
+        val wsFile = getWarpScripFileFromContext(context)
+        return wsFile != null && configuration.name == wsFile.nameWithoutExtension
+    }
 
     override fun setupConfigurationFromContext(
         configuration: WarpScriptRunConfiguration,
@@ -88,7 +92,7 @@ class WarpScriptRunConfigurationProducer : LazyRunConfigurationProducer<WarpScri
         sourceElement: Ref<PsiElement>
     ): Boolean {
         val file = getWarpScripFileFromContext(context) ?: return false
-        configuration.name = file.name
+        configuration.name = file.nameWithoutExtension
         configuration.scriptPath = file.path
         return true
     }
