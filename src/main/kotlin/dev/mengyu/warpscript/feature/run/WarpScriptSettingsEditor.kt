@@ -19,18 +19,18 @@ class WarpScriptSettingsEditor : SettingsEditor<WarpScriptRunConfiguration>() {
     private lateinit var httpHeaders: JCheckBox
     private lateinit var compressor: JCheckBox
     override fun resetEditorFrom(configuration: WarpScriptRunConfiguration) {
-        scriptPath.component.text = configuration.getScriptPath() ?: ""
-        endpoint.component.text = configuration.getScriptPath() ?: WarpScriptRunConfigurationOptions.endpoint
-        httpHeaders.isSelected = false
-        compressor.isSelected = false
+        scriptPath.component.text = configuration.scriptPath!!
+        endpoint.component.text = configuration.endpoint
+        httpHeaders.isSelected = configuration.httpHeaders
+        compressor.isSelected = configuration.bigRequestCompressed
     }
 
     @Throws(ConfigurationException::class)
     override fun applyEditorTo(configuration: WarpScriptRunConfiguration) {
-        configuration.setScriptPath(scriptPath.component.text)
-        configuration.setEndpoint(endpoint.component.text)
-        configuration.setCompressor(compressor.isSelected)
-        configuration.setHttpHeadersLog(httpHeaders.isSelected)
+        configuration.scriptPath = scriptPath.component.text
+        configuration.endpoint = endpoint.component.text
+        configuration.bigRequestCompressed = compressor.isSelected
+        configuration.httpHeaders = httpHeaders.isSelected
     }
 
     override fun createEditor(): JComponent {

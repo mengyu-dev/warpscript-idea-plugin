@@ -2,7 +2,7 @@ package dev.mengyu.warpscript.feature.run
 
 import com.intellij.execution.configurations.RunConfigurationOptions
 
-class WarpScriptRunConfigurationOptions : RunConfigurationOptions() {
+open class WarpScriptRunConfigurationOptions : RunConfigurationOptions() {
     private val warpScriptPath = string("").provideDelegate(this, "warpScriptPath")
     private val warp10Endpoint = string(endpoint).provideDelegate(this, "endpoint")
     private val httpHeaders = property(false).provideDelegate(this, "headers")

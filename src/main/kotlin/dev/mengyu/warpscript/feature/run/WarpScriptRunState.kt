@@ -29,13 +29,13 @@ class WarpScriptRunState(
 
     override fun startProcess(): ProcessHandler {
         val vf =
-            VirtualFileManager.getInstance().findFileByUrl("file://${warpScriptRunConfiguration.getScriptPath()}")!!
+            VirtualFileManager.getInstance().findFileByUrl("file://${warpScriptRunConfiguration.scriptPath}")!!
         val psiFile = PsiManager.getInstance(environment.project).findFile(vf)!!
         val extraParameters = findParametersInComments(psiFile)
         return WarpScriptProcessHandler(
-            extraParameters.endpoint.takeIf { it.isNotBlank() } ?: warpScriptRunConfiguration.getEndpoint(),
+            extraParameters.endpoint.takeIf { it.isNotBlank() } ?: warpScriptRunConfiguration.endpoint,
             String(vf.contentsToByteArray()),
-            warpScriptRunConfiguration.logResponseHeadersOnError
+            warpScriptRunConfiguration.httpHeaders
         )
     }
 

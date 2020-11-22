@@ -7,7 +7,6 @@ import com.intellij.execution.actions.LazyRunConfigurationProducer
 import com.intellij.execution.configurations.*
 import com.intellij.execution.runners.ExecutionEnvironment
 import com.intellij.icons.AllIcons
-import com.intellij.openapi.components.BaseState
 import com.intellij.openapi.options.SettingsEditor
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.Ref
@@ -43,10 +42,6 @@ class WarpScriptConfigurationFactory constructor(type: ConfigurationType) : Conf
         return FACTORY_NAME
     }
 
-    override fun getOptionsClass(): Class<out BaseState> {
-        return WarpScriptRunConfigurationOptions::class.java
-    }
-
     override fun getId() = "WarpScript Configuration Factory"
 
     companion object {
@@ -55,38 +50,11 @@ class WarpScriptConfigurationFactory constructor(type: ConfigurationType) : Conf
 }
 
 class WarpScriptRunConfiguration constructor(project: Project, factory: ConfigurationFactory, name: String) :
-    RunConfigurationBase<WarpScriptRunConfigurationOptions>(project, factory, name) {
-
-    var logResponseHeadersOnError: Boolean = true
-
-    override fun getOptions(): WarpScriptRunConfigurationOptions {
-        return super.getOptions() as WarpScriptRunConfigurationOptions
-    }
-
-    fun getScriptPath() = options.getScriptPath()
-
-    fun setScriptPath(scriptPath: String) {
-        options.setScriptPath(scriptPath)
-    }
-
-    fun getEndpoint() = options.getEndpoint()
-
-    fun setEndpoint(endpoint: String) {
-        options.setEndpoint(endpoint)
-    }
-
-    fun getHttpHeadersLog() = options.getHttpHeadersLog()
-
-    fun setHttpHeadersLog(log: Boolean) {
-        options.setHttpHeadersLog(log)
-    }
-
-    fun getCompressor() = options.getCompressor()
-
-    fun setCompressor(compress: Boolean) {
-        options.setCompressor(compress)
-    }
-
+    RunConfigurationBase<Any>(project, factory, name) {
+    var scriptPath: String? = null
+    var endpoint: String = "http://localhost:8080/api/v0/exec"
+    var httpHeaders: Boolean = false
+    var bigRequestCompressed: Boolean = false
 
     override fun getConfigurationEditor(): SettingsEditor<out RunConfiguration> {
         return WarpScriptSettingsEditor()
@@ -121,7 +89,7 @@ class WarpScriptRunConfigurationProducer : LazyRunConfigurationProducer<WarpScri
     ): Boolean {
         val file = getWarpScripFileFromContext(context) ?: return false
         configuration.name = file.name
-        configuration.setScriptPath(file.path)
+        configuration.scriptPath = file.path
         return true
     }
 
