@@ -18,6 +18,9 @@
                                        implementationClass="dev.mengyu.warpscript.feature.WarpScriptHighlighterFactory"/>
         <completion.contributor language="Warpscript"
                                 implementationClass="dev.mengyu.warpscript.feature.WarpScriptCompletionContributor"/>
+        <configurationType implementation="dev.mengyu.warpscript.feature.run.WarpScriptRunConfigurationType"/>
+        <runConfigurationProducer
+                implementation="dev.mengyu.warpscript.feature.run.WarpScriptRunConfigurationProducer"/>
     </extensions>
 
     <actions>
