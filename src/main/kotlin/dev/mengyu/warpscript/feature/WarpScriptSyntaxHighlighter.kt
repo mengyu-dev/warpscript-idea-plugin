@@ -62,7 +62,7 @@ class WarpScriptSyntaxHighlighter : SyntaxHighlighterBase() {
         val NUMBER = arrayOf(createTextAttributesKey("WS_NUMBER", DefaultLanguageHighlighterColors.NUMBER))
         val NATIVE_CALL = arrayOf(
             createTextAttributesKey("WS_CALL", DefaultLanguageHighlighterColors.FUNCTION_CALL),
-            createTextAttributesKey("WS_NATIVE_FUNCTION", DefaultLanguageHighlighterColors.KEYWORD),
+            createTextAttributesKey("WS_NATIVE_FUNCTION", DefaultLanguageHighlighterColors.KEYWORD)
         )
     }
 }

@@ -1,22 +1,17 @@
 // This is a generated file. Not intended for manual editing.
 package dev.mengyu.warpscript.psi;
 
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.PsiElement;
 import com.intellij.lang.ASTNode;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.tree.IElementType;
 import dev.mengyu.warpscript.psi.impl.*;
 
 public interface WarpScriptTypes {
 
-  IElementType BASIC_VALUE_EXPR = new WarpScriptElementType("BASIC_VALUE_EXPR");
   IElementType BOOL_LITERAL_EXPR = new WarpScriptElementType("BOOL_LITERAL_EXPR");
-  IElementType CALL_EXPR = new WarpScriptElementType("CALL_EXPR");
   IElementType COLLECTION_VALUE_EXPR = new WarpScriptElementType("COLLECTION_VALUE_EXPR");
   IElementType CONTROL_EXPR = new WarpScriptElementType("CONTROL_EXPR");
   IElementType DOUBLE_LITERAL_EXPR = new WarpScriptElementType("DOUBLE_LITERAL_EXPR");
-  IElementType EXPR = new WarpScriptElementType("EXPR");
-  IElementType EXTENSION_FUNC_CALL_EXPR = new WarpScriptElementType("EXTENSION_FUNC_CALL_EXPR");
-  IElementType FUNC_CALL_EXPR = new WarpScriptElementType("FUNC_CALL_EXPR");
   IElementType IFTE_CONTROL_EXPR = new WarpScriptElementType("IFTE_CONTROL_EXPR");
   IElementType IFT_CONTROL_EXPR = new WarpScriptElementType("IFT_CONTROL_EXPR");
   IElementType LIST_EXPR = new WarpScriptElementType("LIST_EXPR");
@@ -27,12 +22,10 @@ public interface WarpScriptTypes {
   IElementType MAP_EXPR = new WarpScriptElementType("MAP_EXPR");
   IElementType MAP_KEY_EXPR = new WarpScriptElementType("MAP_KEY_EXPR");
   IElementType MAP_VALUE_EXPR = new WarpScriptElementType("MAP_VALUE_EXPR");
-  IElementType NATIVE_FUNC_CALL_EXPR = new WarpScriptElementType("NATIVE_FUNC_CALL_EXPR");
   IElementType NULL_LITERAL_EXPR = new WarpScriptElementType("NULL_LITERAL_EXPR");
   IElementType SET_EXPR = new WarpScriptElementType("SET_EXPR");
   IElementType SINGLE_VALUE_EXPR = new WarpScriptElementType("SINGLE_VALUE_EXPR");
   IElementType STRING_LITERAL_EXPR = new WarpScriptElementType("STRING_LITERAL_EXPR");
-  IElementType VALUE_EXPR = new WarpScriptElementType("VALUE_EXPR");
   IElementType VARIABLE_VALUE_EXPR = new WarpScriptElementType("VARIABLE_VALUE_EXPR");
 
   IElementType BCOMMENT = new WarpScriptTokenType("BCOMMENT");
@@ -70,14 +63,8 @@ public interface WarpScriptTypes {
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
-      if (type == BASIC_VALUE_EXPR) {
-        return new WarpScriptBasicValueExprImpl(node);
-      }
-      else if (type == BOOL_LITERAL_EXPR) {
+      if (type == BOOL_LITERAL_EXPR) {
         return new WarpScriptBoolLiteralExprImpl(node);
-      }
-      else if (type == CALL_EXPR) {
-        return new WarpScriptCallExprImpl(node);
       }
       else if (type == COLLECTION_VALUE_EXPR) {
         return new WarpScriptCollectionValueExprImpl(node);
@@ -87,15 +74,6 @@ public interface WarpScriptTypes {
       }
       else if (type == DOUBLE_LITERAL_EXPR) {
         return new WarpScriptDoubleLiteralExprImpl(node);
-      }
-      else if (type == EXPR) {
-        return new WarpScriptExprImpl(node);
-      }
-      else if (type == EXTENSION_FUNC_CALL_EXPR) {
-        return new WarpScriptExtensionFuncCallExprImpl(node);
-      }
-      else if (type == FUNC_CALL_EXPR) {
-        return new WarpScriptFuncCallExprImpl(node);
       }
       else if (type == IFTE_CONTROL_EXPR) {
         return new WarpScriptIfteControlExprImpl(node);
@@ -127,9 +105,6 @@ public interface WarpScriptTypes {
       else if (type == MAP_VALUE_EXPR) {
         return new WarpScriptMapValueExprImpl(node);
       }
-      else if (type == NATIVE_FUNC_CALL_EXPR) {
-        return new WarpScriptNativeFuncCallExprImpl(node);
-      }
       else if (type == NULL_LITERAL_EXPR) {
         return new WarpScriptNullLiteralExprImpl(node);
       }
@@ -141,9 +116,6 @@ public interface WarpScriptTypes {
       }
       else if (type == STRING_LITERAL_EXPR) {
         return new WarpScriptStringLiteralExprImpl(node);
-      }
-      else if (type == VALUE_EXPR) {
-        return new WarpScriptValueExprImpl(node);
       }
       else if (type == VARIABLE_VALUE_EXPR) {
         return new WarpScriptVariableValueExprImpl(node);

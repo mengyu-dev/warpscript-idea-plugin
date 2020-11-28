@@ -1,15 +1,15 @@
 // This is a generated file. Not intended for manual editing.
 package dev.mengyu.warpscript;
 
+import com.intellij.lang.ASTNode;
+import com.intellij.lang.LightPsiParser;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
-import static dev.mengyu.warpscript.psi.WarpScriptTypes.*;
-import static com.intellij.lang.parser.GeneratedParserUtilBase.*;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.tree.TokenSet;
 import com.intellij.lang.PsiParser;
-import com.intellij.lang.LightPsiParser;
+import com.intellij.psi.tree.IElementType;
+
+import static com.intellij.lang.parser.GeneratedParserUtilBase.*;
+import static dev.mengyu.warpscript.psi.WarpScriptTypes.*;
 
 @SuppressWarnings({"SimplifiableIfStatement", "UnusedAssignment"})
 public class WarpScriptParser implements PsiParser, LightPsiParser {
@@ -37,16 +37,14 @@ public class WarpScriptParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // long_literal_expr | double_literal_expr | string_literal_expr | bool_literal_expr | null_literal_expr
-  public static boolean basic_value_expr(PsiBuilder b, int l) {
+  static boolean basic_value_expr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "basic_value_expr")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, BASIC_VALUE_EXPR, "<basic value expr>");
     r = long_literal_expr(b, l + 1);
     if (!r) r = double_literal_expr(b, l + 1);
     if (!r) r = string_literal_expr(b, l + 1);
     if (!r) r = bool_literal_expr(b, l + 1);
     if (!r) r = null_literal_expr(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
@@ -66,13 +64,11 @@ public class WarpScriptParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // macro_call_expr | func_call_expr
-  public static boolean call_expr(PsiBuilder b, int l) {
+  static boolean call_expr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "call_expr")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, CALL_EXPR, "<call expr>");
     r = macro_call_expr(b, l + 1);
     if (!r) r = func_call_expr(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
@@ -116,15 +112,13 @@ public class WarpScriptParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // ( control_expr | call_expr | value_expr )*
-  public static boolean expr(PsiBuilder b, int l) {
+  static boolean expr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "expr")) return false;
-    Marker m = enter_section_(b, l, _NONE_, EXPR, "<expr>");
     while (true) {
       int c = current_position_(b);
       if (!expr_0(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "expr", c)) break;
     }
-    exit_section_(b, l, m, true, false, null);
     return true;
   }
 
@@ -140,26 +134,18 @@ public class WarpScriptParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // EXT_FUNC
-  public static boolean extension_func_call_expr(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "extension_func_call_expr")) return false;
-    if (!nextTokenIs(b, EXT_FUNC)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, EXT_FUNC);
-    exit_section_(b, m, EXTENSION_FUNC_CALL_EXPR, r);
-    return r;
+  static boolean extension_func_call_expr(PsiBuilder b, int l) {
+      return consumeToken(b, EXT_FUNC);
   }
 
   /* ********************************************************** */
   // extension_func_call_expr | native_func_call_expr
-  public static boolean func_call_expr(PsiBuilder b, int l) {
+  static boolean func_call_expr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "func_call_expr")) return false;
-    if (!nextTokenIs(b, "<func call expr>", EXT_FUNC, NATIVE_FUNC)) return false;
+      if (!nextTokenIs(b, "", EXT_FUNC, NATIVE_FUNC)) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, FUNC_CALL_EXPR, "<func call expr>");
     r = extension_func_call_expr(b, l + 1);
     if (!r) r = native_func_call_expr(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
@@ -425,14 +411,8 @@ public class WarpScriptParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // NATIVE_FUNC
-  public static boolean native_func_call_expr(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "native_func_call_expr")) return false;
-    if (!nextTokenIs(b, NATIVE_FUNC)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, NATIVE_FUNC);
-    exit_section_(b, m, NATIVE_FUNC_CALL_EXPR, r);
-    return r;
+  static boolean native_func_call_expr(PsiBuilder b, int l) {
+      return consumeToken(b, NATIVE_FUNC);
   }
 
   /* ********************************************************** */
@@ -534,15 +514,13 @@ public class WarpScriptParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // variable_value_expr | macro_value_expr | basic_value_expr | collection_value_expr
-  public static boolean value_expr(PsiBuilder b, int l) {
+  static boolean value_expr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "value_expr")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, VALUE_EXPR, "<value expr>");
     r = variable_value_expr(b, l + 1);
     if (!r) r = macro_value_expr(b, l + 1);
     if (!r) r = basic_value_expr(b, l + 1);
     if (!r) r = collection_value_expr(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
     return r;
   }
 

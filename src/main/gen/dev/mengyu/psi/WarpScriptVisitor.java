@@ -1,21 +1,13 @@
 // This is a generated file. Not intended for manual editing.
 package dev.mengyu.psi;
 
-import org.jetbrains.annotations.*;
-import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiElementVisitor;
+import org.jetbrains.annotations.NotNull;
 
 public class WarpScriptVisitor extends PsiElementVisitor {
 
-  public void visitBasicValueExpr(@NotNull WarpScriptBasicValueExpr o) {
-    visitPsiElement(o);
-  }
-
   public void visitBoolLiteralExpr(@NotNull WarpScriptBoolLiteralExpr o) {
-    visitPsiElement(o);
-  }
-
-  public void visitCallExpr(@NotNull WarpScriptCallExpr o) {
     visitPsiElement(o);
   }
 
@@ -28,18 +20,6 @@ public class WarpScriptVisitor extends PsiElementVisitor {
   }
 
   public void visitDoubleLiteralExpr(@NotNull WarpScriptDoubleLiteralExpr o) {
-    visitPsiElement(o);
-  }
-
-  public void visitExpr(@NotNull WarpScriptExpr o) {
-    visitPsiElement(o);
-  }
-
-  public void visitExtensionFuncCallExpr(@NotNull WarpScriptExtensionFuncCallExpr o) {
-    visitPsiElement(o);
-  }
-
-  public void visitFuncCallExpr(@NotNull WarpScriptFuncCallExpr o) {
     visitPsiElement(o);
   }
 
@@ -83,10 +63,6 @@ public class WarpScriptVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitNativeFuncCallExpr(@NotNull WarpScriptNativeFuncCallExpr o) {
-    visitPsiElement(o);
-  }
-
   public void visitNullLiteralExpr(@NotNull WarpScriptNullLiteralExpr o) {
     visitPsiElement(o);
   }
@@ -100,10 +76,6 @@ public class WarpScriptVisitor extends PsiElementVisitor {
   }
 
   public void visitStringLiteralExpr(@NotNull WarpScriptStringLiteralExpr o) {
-    visitPsiElement(o);
-  }
-
-  public void visitValueExpr(@NotNull WarpScriptValueExpr o) {
     visitPsiElement(o);
   }
 

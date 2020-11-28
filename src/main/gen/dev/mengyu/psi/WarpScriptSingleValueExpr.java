@@ -1,19 +1,41 @@
 // This is a generated file. Not intended for manual editing.
 package dev.mengyu.psi;
 
-import java.util.List;
-import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 public interface WarpScriptSingleValueExpr extends PsiElement {
 
-  @Nullable
-  WarpScriptCallExpr getCallExpr();
+    @NotNull
+    List<WarpScriptBoolLiteralExpr> getBoolLiteralExprList();
 
-  @Nullable
-  WarpScriptExpr getExpr();
+    @NotNull
+    List<WarpScriptCollectionValueExpr> getCollectionValueExprList();
 
-  @Nullable
-  WarpScriptValueExpr getValueExpr();
+    @NotNull
+    List<WarpScriptControlExpr> getControlExprList();
+
+    @NotNull
+    List<WarpScriptDoubleLiteralExpr> getDoubleLiteralExprList();
+
+    @NotNull
+    List<WarpScriptLongLiteralExpr> getLongLiteralExprList();
+
+    @NotNull
+    List<WarpScriptMacroCallExpr> getMacroCallExprList();
+
+    @NotNull
+    List<WarpScriptMacroValueExpr> getMacroValueExprList();
+
+    @NotNull
+    List<WarpScriptNullLiteralExpr> getNullLiteralExprList();
+
+    @NotNull
+    List<WarpScriptStringLiteralExpr> getStringLiteralExprList();
+
+    @NotNull
+    List<WarpScriptVariableValueExpr> getVariableValueExprList();
 
 }

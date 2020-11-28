@@ -3,7 +3,6 @@ package dev.mengyu.warpscript.psi.impl
 import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.readValue
-import dev.mengyu.psi.WarpScriptFuncCallExpr
 
 object WarpScriptPsiImplUtil {
 
@@ -15,9 +14,6 @@ object WarpScriptPsiImplUtil {
 
     private val functionNames = functions.keys
 
-    fun isNative(element: WarpScriptFuncCallExpr): Boolean {
-        return functionNames.contains(element.text)
-    }
 
     fun isNative(token: String): Boolean {
         return functionNames.contains(token)
