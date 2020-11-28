@@ -23,6 +23,8 @@
                 implementation="dev.mengyu.warpscript.feature.run.WarpScriptRunConfigurationProducer"/>
         <runLineMarkerContributor
                 implementationClass="dev.mengyu.warpscript.feature.run.WarpScriptRunLineMarkerContributor"/>
+        <lang.formatter language="Warpscript"
+                        implementationClass="dev.mengyu.warpscript.feature.style.WarpScriptFormattingModelBuilder"/>
     </extensions>
 
     <actions>

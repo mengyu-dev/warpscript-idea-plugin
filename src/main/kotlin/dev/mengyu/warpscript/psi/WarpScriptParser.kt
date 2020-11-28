@@ -22,10 +22,19 @@ class WarpScriptTokenType(debugName: String) : IElementType(debugName, WarpScrip
 
 class WarpScriptElementType(debugName: String) : IElementType(debugName, WarpScriptLanguage)
 
-class WarpScriptParserDefinition : ParserDefinition {
+object WarpScriptParserDefinition : ParserDefinition {
+    fun leftPairTokens(): TokenSet {
+        return TokenSet.create(WarpScriptTypes.LBRACE, WarpScriptTypes.LBRACK, WarpScriptTypes.LPAREN)
+    }
+
+    fun rightPairTokens(): TokenSet {
+        return TokenSet.create(WarpScriptTypes.RBRACE, WarpScriptTypes.RBRACK, WarpScriptTypes.RPAREN)
+    }
+
+
     val FILE = IFileElementType(WarpScriptLanguage)
 
-    override fun createLexer(project: Project)= WarpScriptLexerAdapter()
+    override fun createLexer(project: Project) = WarpScriptLexerAdapter()
 
     override fun createParser(project: Project) = WarpScriptParser()
 
@@ -40,7 +49,7 @@ class WarpScriptParserDefinition : ParserDefinition {
     override fun getFileNodeType(): IFileElementType = FILE
 
     override fun getStringLiteralElements(): TokenSet {
-        return TokenSet.EMPTY
+        return TokenSet.create(WarpScriptTypes.MSTRING, WarpScriptTypes.STRING)
     }
 
     override fun createElement(node: ASTNode): PsiElement = WarpScriptTypes.Factory.createElement(node)
